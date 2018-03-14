@@ -1,0 +1,1 @@
+# This file contains the Pudgi creature and its information
