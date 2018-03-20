@@ -5,11 +5,12 @@
 import pygame
 import constants
 import levels
+from file_handler import JSONHandler
 from pudgi import Pudgi
 
 
 def main():
-
+    # ----------- pygame objects -----------
     pygame.init()
 
     size = [constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]
@@ -34,6 +35,12 @@ def main():
     done = False
 
     clock = pygame.time.Clock()
+
+    # ----------- JSON objects ------------
+    # handler = JSONHandler()
+    # handler.load_file('./data/decisions.json')
+    # data = handler.get_data()
+    # print(data)
 
     # --------------Main While loop---------------
     while not done:
@@ -64,7 +71,7 @@ def main():
 
         clock.tick(30)
 
-        print(clock.get_fps())
+        # print(clock.get_fps())
 
         pygame.display.flip()
 

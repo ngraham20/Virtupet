@@ -2,6 +2,7 @@
 
 import pygame
 import constants
+from file_handler import JSONHandler
 from spritesheet_functions import SpriteSheet
 
 
@@ -13,7 +14,7 @@ class Pudgi(pygame.sprite.Sprite):
 
         self.name = None
 
-        # ------- heuristic weights  -------
+        # ------- heuristic -------
         self.wattachment = None
         self.whumor = None
         self.wenjoyment = None
@@ -24,6 +25,10 @@ class Pudgi(pygame.sprite.Sprite):
         self.wpenergy = None
         self.wmenergy = None
         self.entertainment = None
+
+        self.handler = JSONHandler()
+        self.handler.load_file('./data/pudgi_blue.json')
+        self.json_object = self.handler.get_data()
 
         # ------- action variables -------
         self.known_actions = []
@@ -50,9 +55,8 @@ class Pudgi(pygame.sprite.Sprite):
         self.level = None
 
     def load_animations(self):
-        sprite_sheet_r = SpriteSheet("./assets/pudgi-blue-r.png")
-        sprite_sheet_l = SpriteSheet("./assets/pudgi-blue-l.png")
-
+        sprite_sheet_r = SpriteSheet(self.json_object["animations"]["R"])
+        sprite_sheet_l = SpriteSheet(self.json_object["animations"]["L"])
         # load right animation
         sprite_count = 0
         for y in range(0, 828):

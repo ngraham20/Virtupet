@@ -6,7 +6,12 @@ class JSONHandler:
 
     def __init__(self):
 
-        self.json_string = None
+        self.json_object = None
         self.file_name = None
 
-    def
+    def load_file(self, file):
+        with open(file, 'r') as f:
+            self.json_object = json.load(f)
+
+    def get_data(self):
+        return self.json_object

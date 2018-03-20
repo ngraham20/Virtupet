@@ -1,29 +1,29 @@
 {"decisions": [
-    {"roll_ball" : [
-      {"attachment": 0.2},
-      {"humor": 0.3},
-      {"enjoyment": 0.4},
-      {"excitement": 0.3},
-      {"confidence": 0.2},
-      {"contentment": 0.6},
-      {"entertainment": 1},
-      {"vitality": 0.1},
-      {"mental_energy": 0.2},
-      {"physical_energy": 0.2}
-      ]
+    {"name": "roll_ball", "values":
+      {"attachment": 0.2,
+      "humor": 0.3,
+      "enjoyment": 0.4,
+      "excitement": 0.3,
+      "confidence": 0.2,
+      "contentment": 0.6,
+      "entertainment": 1,
+      "vitality": 0.1,
+      "mental_energy": 0.2,
+      "physical_energy": 0.2
+      }
     },
-    {"push_car" : [
-      {"attachment": 0.3},
-      {"humor": 0.3},
-      {"enjoyment": 0.5},
-      {"excitement": 0.3},
-      {"confidence": 0.3},
-      {"contentment": 0.6},
-      {"entertainment": 1},
-      {"vitality": 0.1},
-      {"mental_energy": 0.2},
-      {"physical_energy": 0.2}
-      ]
+    {"name": "push_car", "values":
+      {"attachment": 0.3,
+      "humor": 0.3,
+      "enjoyment": 0.5,
+      "excitement": 0.3,
+      "confidence": 0.3,
+      "contentment": 0.6,
+      "entertainment": 1,
+      "vitality": 0.1,
+      "mental_energy": 0.2,
+      "physical_energy": 0.2
+      }
     }
   ]
 }
