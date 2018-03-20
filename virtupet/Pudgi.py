@@ -1,6 +1,7 @@
 # This file contains the Pudgi creature and its information
 
 import pygame
+import random
 import constants
 from file_handler import JSONHandler
 from spritesheet_functions import SpriteSheet
@@ -25,6 +26,21 @@ class Pudgi(pygame.sprite.Sprite):
         self.wpenergy = None
         self.wmenergy = None
         self.entertainment = None
+
+        # ------- heuristic weights  ------- todo randomize weights out of 1 and 10
+        def randomize():
+            range(1)
+            return random.randint(1, 11)
+        self.wattachment = randomize()
+        self.whumor = randomize()
+        self.wenjoyment = randomize()
+        self.wexcitement = randomize()
+        self.wconfidence = randomize()
+        self.wcontentment = randomize()
+        self.wvitality = randomize()
+        self.wpenergy = randomize()
+        self.wmenergy = randomize()
+        self.entertainment = randomize()
 
         self.handler = JSONHandler()
         self.handler.load_file('./data/pudgi_blue.json')
