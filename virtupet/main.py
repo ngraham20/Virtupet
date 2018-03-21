@@ -4,7 +4,7 @@
 
 import pygame
 import constants
-import levels
+import environments
 from file_handler import JSONHandler
 from pudgi import Pudgi
 
@@ -25,13 +25,13 @@ def main():
 
     player = Pudgi()
 
-    level_list = [levels.LevelHouse(player)]
+    env_list = [environments.EnvironmentHouse(player)]
 
-    current_level_no = 0
-    current_level = level_list[current_level_no]
+    current_env_no = 0
+    current_env = env_list[current_env_no]
 
     active_sprite_list = pygame.sprite.Group()
-    player.level = current_level
+    player.env = current_env
 
     player.rect.x = 340
     player.rect.y = constants.SCREEN_HEIGHT - player.rect.height
@@ -69,9 +69,9 @@ def main():
 
         active_sprite_list.update()
 
-        current_level.update()
+        current_env.update()
 
-        current_level.draw(screen)
+        current_env.draw(screen)
         active_sprite_list.draw(screen)
 
         clock.tick(30)
