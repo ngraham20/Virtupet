@@ -1,10 +1,10 @@
-{"house":
+{"yard":
   {"background": "./assets/yard.png",
   "enemies": [],
   "platforms": []
   },
-  "yard":
-  {"background": "./assets/background_02.png",
+  "house":
+  {"background": "./assets/house.png",
   "enemies": [],
   "platforms": []
   }
