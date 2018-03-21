@@ -7,5 +7,10 @@
   {"background": "./assets/house.png",
   "enemies": [],
   "platforms": []
+  },
+  "dither":
+  {"background": "./assets/dither.png",
+  "enemies": [],
+  "platforms": []
   }
 }

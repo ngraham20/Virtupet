@@ -33,5 +33,6 @@ class EnvironmentHouse(Environment):
 
         Environment.__init__(self, agent)
 
-        self.background = pygame.image.load(self.json_object["house"]["background"]).convert()
+        # todo make background 300x200
+        self.background = pygame.image.load(self.json_object["dither"]["background"]).convert()
         self.background.set_colorkey(constants.WHITE)

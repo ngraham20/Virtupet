@@ -27,7 +27,9 @@ class Pudgi(pygame.sprite.Sprite):
         self.wmenergy = None
         self.entertainment = None
 
-        # ------- heuristic weights  ------- todo randomize weights out of 1 and 10
+        # ------- heuristic weights  -------
+
+        # randomize weights out of 1 and 10 todo simplify the randomizer more
         def randomize():
             range(1)
             return random.randint(1, 11)
@@ -133,4 +135,3 @@ class Pudgi(pygame.sprite.Sprite):
     def export(self):
         # write information about self to a json file
         return
-
