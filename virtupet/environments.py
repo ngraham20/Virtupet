@@ -4,11 +4,11 @@ import constants
 
 class Environment:
 
-    def __init__(self, player):
+    def __init__(self, agent):
 
         self.background = None
         self.enemy_list = None
-        self.player = player
+        self.agent = agent
 
         self.enemy_list = pygame.sprite.Group()
 
@@ -24,9 +24,9 @@ class Environment:
 
 class EnvironmentHouse(Environment):
 
-    def __init__(self, player):
+    def __init__(self, agent):
 
-        Environment.__init__(self, player)
+        Environment.__init__(self, agent)
 
         self.background = pygame.image.load("./assets/background_01.png").convert()
         self.background.set_colorkey(constants.WHITE)

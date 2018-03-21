@@ -23,19 +23,19 @@ def main():
 
     pygame.display.set_caption(json_object["name"])
 
-    player = Pudgi()
+    agent = Pudgi()
 
-    env_list = [environments.EnvironmentHouse(player)]
+    env_list = [environments.EnvironmentHouse(agent)]
 
     current_env_no = 0
     current_env = env_list[current_env_no]
 
     active_sprite_list = pygame.sprite.Group()
-    player.env = current_env
+    agent.env = current_env
 
-    player.rect.x = 340
-    player.rect.y = constants.SCREEN_HEIGHT - player.rect.height
-    active_sprite_list.add(player)
+    agent.rect.x = 340
+    agent.rect.y = constants.SCREEN_HEIGHT - agent.rect.height
+    active_sprite_list.add(agent)
 
     done = False
 
@@ -55,17 +55,17 @@ def main():
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    player.go_left()
+                    agent.go_left()
                 if event.key == pygame.K_RIGHT:
-                    player.go_right()
+                    agent.go_right()
                 # if event.key == pygame.K_UP:
-                #     player.jump()
+                #     agent.jump()
 
             if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT and player.change_x < 0:
-                    player.stop()
-                if event.key == pygame.K_RIGHT and player.change_x > 0:
-                    player.stop()
+                if event.key == pygame.K_LEFT and agent.change_x < 0:
+                    agent.stop()
+                if event.key == pygame.K_RIGHT and agent.change_x > 0:
+                    agent.stop()
 
         active_sprite_list.update()
 
