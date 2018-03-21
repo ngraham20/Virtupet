@@ -1,0 +1,11 @@
+{"house":
+  {"background": "./assets/background_01.png",
+  "enemies": [],
+  "platforms": []
+  },
+  "yard":
+  {"background": "./assets/background_02.png",
+  "enemies": [],
+  "platforms": []
+  }
+}

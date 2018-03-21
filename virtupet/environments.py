@@ -1,10 +1,15 @@
 import pygame
 import constants
+from file_handler import JSONHandler
 
 
 class Environment:
 
     def __init__(self, agent):
+
+        handler = JSONHandler()
+        handler.load_file('./data/environments.json')
+        self.json_object = handler.get_data()
 
         self.background = None
         self.enemy_list = None
@@ -28,5 +33,5 @@ class EnvironmentHouse(Environment):
 
         Environment.__init__(self, agent)
 
-        self.background = pygame.image.load("./assets/background_01.png").convert()
+        self.background = pygame.image.load(self.json_object["house"]["background"]).convert()
         self.background.set_colorkey(constants.WHITE)
