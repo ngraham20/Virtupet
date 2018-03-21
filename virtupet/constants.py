@@ -12,3 +12,6 @@ TRANS = (255, 60, 180)
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 
+# pudgi file location
+PUDGI = './data/pudgi_blue.json'
+

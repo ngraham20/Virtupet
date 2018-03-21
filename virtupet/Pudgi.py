@@ -43,7 +43,7 @@ class Pudgi(pygame.sprite.Sprite):
         self.entertainment = randomize()
 
         self.handler = JSONHandler()
-        self.handler.load_file('./data/pudgi_blue.json')
+        self.handler.load_file(constants.PUDGI)
         self.json_object = self.handler.get_data()
 
         # ------- action variables -------

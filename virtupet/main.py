@@ -10,13 +10,18 @@ from pudgi import Pudgi
 
 
 def main():
+
+    handler = JSONHandler()
+    handler.load_file(constants.PUDGI)
+    json_object = handler.get_data()
+
     # ----------- pygame objects -----------
     pygame.init()
 
     size = [constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]
     screen = pygame.display.set_mode(size)
 
-    pygame.display.set_caption("Blue Pudgi")
+    pygame.display.set_caption(json_object["name"])
 
     player = Pudgi()
 
