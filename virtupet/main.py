@@ -34,7 +34,7 @@ def main():
     agent.env = current_env
 
     agent.rect.x = 340
-    agent.rect.y = constants.SCREEN_HEIGHT - agent.rect.height
+    agent.rect.y = constants.SCREEN_HEIGHT - 140
     active_sprite_list.add(agent)
 
     done = False
