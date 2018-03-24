@@ -16,8 +16,8 @@ class Sequencer:
     # sequence should return a dictionary of genes which represent the heads of the chromosomes
     def sequence(self):
         genome = {"behavior": [{"attachment": None}, {"humor": None}, {"enjoyment": None},
-                                {"excitement": None}, {"confidence": None}, {"contentment": None},
-                                {"vitality": None}, {"physical": None}, {"mental": None}],
+                               {"excitement": None}, {"confidence": None}, {"contentment": None},
+                               {"vitality": None}, {"physical": None}, {"mental": None}],
                   "personality": [{"a1": None}, {"a2": None}],
                   "color": [{"a1": None}, {"a2": None}]}
 
@@ -71,19 +71,3 @@ class DNA:
             chromosomes.append(chromosome)
 
         return chromosomes
-
-    def get_color_values(self):
-        chromosomes = list(list())
-        chromosome = list()
-        for k in range(len(self.indices["color"])):
-            index = index = list(self.indices["color"][k].values())
-            for gene in range(self.sequencer.c_chrom_size):
-                chromosome.append(self.dna[index[0] + gene])
-            chromosomes.append(chromosome)
-
-        return chromosomes
-
-
-test = DNA()
-test.gen_rand()
-print(test.get_chromosome_values("personality"))
