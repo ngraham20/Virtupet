@@ -12,7 +12,7 @@ from pudgi import Pudgi
 def main():
 
     handler = JSONHandler()
-    handler.load_file(constants.PUDGI)
+    handler.load_file(constants.BLUEPUDGI)
     json_object = handler.get_data()
 
     # ----------- pygame objects -----------
