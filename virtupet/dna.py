@@ -67,7 +67,8 @@ class DNA:
             else:
                 count = -1
             for gene in range(count):
-                chromosome.append(self.dna[index[0] + gene])
+                if index is not None:
+                    chromosome.append(self.dna[index[0] + gene])
             chromosomes.append(chromosome)
 
         return chromosomes
