@@ -55,8 +55,8 @@ class DNA:
 
     def get_chromosome_values(self, c_type):
         chromosomes = list(list())
-        chromosome = list()
         for k in range(len(self.indices[c_type])):
+            chromosome = list()
             index = list(self.indices[c_type][k].values())
             if c_type == "behavior":
                 count = self.sequencer.b_chrom_size
@@ -72,3 +72,8 @@ class DNA:
             chromosomes.append(chromosome)
 
         return chromosomes
+
+
+my_dna = DNA()
+my_dna.gen_rand()
+print(my_dna.get_chromosome_values("personality"))
