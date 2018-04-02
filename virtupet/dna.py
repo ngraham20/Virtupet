@@ -5,8 +5,8 @@ import random
 class Sequencer:
 
     def __init__(self):
-        self.gene_count = 70
-        self.b_chrom_size = 6
+        self.gene_count = 79
+        self.b_chrom_size = 7
         self.b_chrom_count = 9
         self.c_chrom_size = 4
         self.c_chrom_count = 2
@@ -57,7 +57,8 @@ class DNA:
         chromosomes = list(list())
         for k in range(len(self.indices[c_type])):
             chromosome = list()
-            index = list(self.indices[c_type][k].values())
+            value = list(self.indices[c_type][k].values())[0]
+            key = list(self.indices[c_type][k].keys())[0]
             if c_type == "behavior":
                 count = self.sequencer.b_chrom_size
             elif c_type == "color":
@@ -67,13 +68,15 @@ class DNA:
             else:
                 count = -1
             for gene in range(count):
-                if index is not None:
-                    chromosome.append(self.dna[index[0] + gene])
-            chromosomes.append(chromosome)
+                if value is not None:
+                    chromosome.append(self.dna[value + gene])
+            chromosomes.append({key: chromosome})
 
         return chromosomes
 
+    def get_dna_strand(self):
+        return self.dna
 
-my_dna = DNA()
-my_dna.gen_rand()
-print(my_dna.get_chromosome_values("personality"))
+# my_dna = DNA()
+# my_dna.gen_rand()
+# print(my_dna.get_chromosome_values("personality"))

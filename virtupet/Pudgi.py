@@ -5,6 +5,7 @@ import random
 import constants
 from file_handler import JSONHandler
 from spritesheet_functions import SpriteSheet
+from dna import DNA
 
 
 class Pudgi(pygame.sprite.Sprite):
@@ -29,24 +30,31 @@ class Pudgi(pygame.sprite.Sprite):
 
         # ------- heuristic weights  -------
 
-        # randomize weights out of 1 and 10 todo simplify the randomizer more
-        def randomize():
-            range(1)
-            return random.randint(1, 11)
-        self.wattachment = randomize()
-        self.whumor = randomize()
-        self.wenjoyment = randomize()
-        self.wexcitement = randomize()
-        self.wconfidence = randomize()
-        self.wcontentment = randomize()
-        self.wvitality = randomize()
-        self.wpenergy = randomize()
-        self.wmenergy = randomize()
-        self.entertainment = randomize()
+        # randomize weights out of 1 and 10 todo move the randomizer to randomize the dna
+        # def randomize():
+        #     range(1)
+        #     return random.randint(1, 11)
+        # self.wattachment = randomize()
+        # self.whumor = randomize()
+        # self.wenjoyment = randomize()
+        # self.wexcitement = randomize()
+        # self.wconfidence = randomize()
+        # self.wcontentment = randomize()
+        # self.wvitality = randomize()
+        # self.wpenergy = randomize()
+        # self.wmenergy = randomize()
+        # self.entertainment = randomize()
 
         self.handler = JSONHandler()
         self.handler.load_file(constants.BLUEPUDGI)
         self.json_object = self.handler.get_data()
+
+        self.dna = DNA()
+        self.dna.gen_rand()  # todo modify this for proper randomization of genes
+        self.json_object["dna"] = self.dna.get_dna_strand()
+        self.handler.save(self.json_object)
+
+
 
         # ------- action variables -------
         self.known_actions = []
@@ -55,6 +63,9 @@ class Pudgi(pygame.sprite.Sprite):
         # ------- animation variables -------
         self.change_x = 0
         self.change_y = 0
+
+        self.sprite_sheet_l = None
+        self.sprite_sheet_r = None
 
         self.walking_frames_l = []
         self.walking_frames_r = []
@@ -72,9 +83,43 @@ class Pudgi(pygame.sprite.Sprite):
 
         self.level = None
 
+    def decode_dna(self):
+
+        # -------------- set up chromosomes -------------
+        b_chroms = self.dna.get_chromosome_values("behavior")
+        c_chroms = self.dna.get_chromosome_values("color")
+        p_chroms = self.dna.get_chromosome_values("personality")
+
+        # ---------------- color chromosomes --------------
+        c_alpha = c_chroms[0]["a1"]
+        c_beta = c_chroms[1]["a2"]
+        if c_alpha[0] >= c_beta[0]:
+            number = c_alpha[1:]
+        else:
+            number = c_beta[1:]
+
+        number = [0, 1, 1]  # todo once the other colors are in place, remove this to allow the system to derive color
+        self.handler.load_file("./data/metadata.json")
+        data = self.handler.get_data()
+        node = data["root"]
+        for char in number:
+            node = node[str(char)]
+
+        # set sprite sheets from dna
+        self.sprite_sheet_l = SpriteSheet(node["L"])
+        self.sprite_sheet_r = SpriteSheet(node["R"])
+
+        # todo use dna to get other information too
+
+        # ----------------- behavior chromosomes -----------
+
+        # ----------------- personality chromosomes --------------
+
     def load_animations(self):
-        sprite_sheet_r = SpriteSheet(self.json_object["animations"]["R"])
-        sprite_sheet_l = SpriteSheet(self.json_object["animations"]["L"])
+        self.decode_dna()
+
+        # self.sprite_sheet_r = SpriteSheet(self.json_object["animations"]["R"])
+        # self.sprite_sheet_l = SpriteSheet(self.json_object["animations"]["L"])
         # load right animation
         sprite_count = 0
         for y in range(0, 828):
@@ -85,7 +130,7 @@ class Pudgi(pygame.sprite.Sprite):
                     if sprite_count == 60:
                         break
                     sprite_count += 1
-                    image = sprite_sheet_r.get_image(x, y, 138, 114)
+                    image = self.sprite_sheet_r.get_image(x, y, 138, 114)
                     self.walking_frames_r.append(image)
 
         self.len_animation = sprite_count
@@ -100,7 +145,7 @@ class Pudgi(pygame.sprite.Sprite):
                     if sprite_count == 60:
                         break
                     sprite_count += 1
-                    image = sprite_sheet_l.get_image(x, y, 138, 114)
+                    image = self.sprite_sheet_l.get_image(x, y, 138, 114)
                     self.walking_frames_l.append(image)
 
         self.len_animation = sprite_count

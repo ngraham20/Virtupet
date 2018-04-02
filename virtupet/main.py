@@ -42,10 +42,12 @@ def main():
     clock = pygame.time.Clock()
 
     # ----------- JSON objects ------------
-    # handler = JSONHandler()
-    # handler.load_file('./data/decisions.json')
+    # handler.load_file("./data/metadata.json")
     # data = handler.get_data()
-    # print(data)
+    # number = "001"
+    # node = data["root"]
+    # for char in number:
+    #     node = node[char]
 
     # --------------Main While loop---------------
     while not done:

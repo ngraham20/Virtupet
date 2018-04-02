@@ -1,0 +1,46 @@
+{
+  "root": {
+  "0": {
+    "0": {
+      "0": {
+        "L": "vamp",
+        "R": "vamp"
+        },
+      "1": {
+        "L": "mid",
+        "R": "mid"
+        }
+      },
+    "1": {
+      "0": {
+        "L": "purp",
+        "R": "purp"
+        },
+      "1": {"L": "./assets/pudgi-blue-r.png",
+        "R": "./assets/pudgi-blue-r.png"
+        }
+      }
+    },
+  "1": {
+    "0": {
+      "0": {
+        "L": "ocean",
+        "R": "ocean"
+        }, "1": {
+          "L": "teal",
+          "R": "teal"
+          }
+        },
+      "1": {
+        "0": {
+          "L": "white",
+          "R": "white"
+          },
+        "1": {
+          "L": "angel",
+          "R": "angel"
+          }
+        }
+      }
+    }
+}
