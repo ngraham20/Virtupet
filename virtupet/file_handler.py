@@ -22,4 +22,4 @@ class JSONHandler:
 
     def save(self, json_data):
         with open(self.file_name, 'w') as f:
-            json.dump(json_data, f)
+            json.dump(json_data, f, indent=4)

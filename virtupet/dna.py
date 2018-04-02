@@ -5,13 +5,15 @@ import random
 class Sequencer:
 
     def __init__(self):
-        self.gene_count = 79
-        self.b_chrom_size = 7
+        self.b_chrom_size = 6
         self.b_chrom_count = 9
         self.c_chrom_size = 4
         self.c_chrom_count = 2
         self.p_chrom_size = 4
         self.p_chrom_count = 2
+        self.gene_count = self.b_chrom_size*self.b_chrom_count +\
+                          self.c_chrom_size*self.c_chrom_count +\
+                          self.p_chrom_size*self.p_chrom_count
 
     # sequence should return a dictionary of genes which represent the heads of the chromosomes
     def sequence(self):
