@@ -1,7 +1,7 @@
-{"name": "Grey Pudgi",
+{"name": "White Pudgi",
 "animations": {
-  "R": "./assets/pudgi-grey-r.png",
-  "L": "./assets/pudgi-grey-l.png"
+  "R": "./assets/pudgi-white-r.png",
+  "L": "./assets/pudgi-white-l.png"
 },
 "weights": [
   {"wattachment": null},
