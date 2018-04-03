@@ -13,5 +13,5 @@ SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 600
 
 # pudgi file location
-BLUEPUDGI = './data/pudgi_blue.json'
+BLUEPUDGI = './data/pudgi.json'
 
