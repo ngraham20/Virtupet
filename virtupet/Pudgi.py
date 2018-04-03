@@ -47,6 +47,9 @@ class Pudgi(pygame.sprite.Sprite):
         # self.wmenergy = randomize()
         # self.entertainment = randomize()
 
+        self.sprite_sheet_l = None
+        self.sprite_sheet_r = None
+
         self.dna = DNA()
         self.dna.gen_rand()  # todo modify this for proper randomization of genes
 
@@ -66,9 +69,6 @@ class Pudgi(pygame.sprite.Sprite):
         # ------- animation variables -------
         self.change_x = 0
         self.change_y = 0
-
-        self.sprite_sheet_l = None
-        self.sprite_sheet_r = None
 
         self.walking_frames_l = []
         self.walking_frames_r = []
