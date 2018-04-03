@@ -1,0 +1,20 @@
+{"name": "Albino Pudgi",
+"animations": {
+  "R": "./assets/pudgi-albino-r.png",
+  "L": "./assets/pudgi-albino-l.png"
+},
+"weights": [
+  {"wattachment": null},
+  {"whumor": null},
+  {"wenjoyment": null},
+  {"wexcitement": null},
+  {"wconfidence": null},
+  {"wcontentment": null},
+  {"wvitality": null},
+  {"wpenergy": null},
+  {"wmenergy": null},
+  {"entertainment": null}
+  ],
+"personality": null,
+"known_decisions": []
+}

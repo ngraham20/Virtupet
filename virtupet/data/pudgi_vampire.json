@@ -1,0 +1,20 @@
+{"name": "Vampire Pudgi",
+"animations": {
+  "R": "./assets/pudgi-vampire-r.png",
+  "L": "./assets/pudgi-vampire-l.png"
+},
+"weights": [
+  {"wattachment": null},
+  {"whumor": null},
+  {"wenjoyment": null},
+  {"wexcitement": null},
+  {"wconfidence": null},
+  {"wcontentment": null},
+  {"wvitality": null},
+  {"wpenergy": null},
+  {"wmenergy": null},
+  {"entertainment": null}
+  ],
+"personality": null,
+"known_decisions": []
+}
