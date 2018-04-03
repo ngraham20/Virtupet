@@ -3,18 +3,18 @@
   "0": {
     "0": {
       "0": {
-        "L": "vamp",
-        "R": "vamp"
+        "L": "./assets/pudgi-vampire-l.png",
+        "R": "./assets/pudgi-vampire-r.png"
         },
       "1": {
-        "L": "mid",
-        "R": "mid"
+        "L": "./assets/pudgi-midnight-l.png",
+        "R": "./assets/pudgi-midnight-r.png"
         }
       },
     "1": {
       "0": {
-        "L": "purp",
-        "R": "purp"
+        "L": "./assets/pudgi-purple-l.png",
+        "R": "./assets/pudgi-purple-r.png"
         },
       "1": {"L": "./assets/pudgi-blue-l.png",
         "R": "./assets/pudgi-blue-r.png"
@@ -24,21 +24,21 @@
   "1": {
     "0": {
       "0": {
-        "L": "ocean",
-        "R": "ocean"
+        "L": "./assets/pudgi-red-l.png",
+        "R": "./assets/pudgi-red-r.png"
         }, "1": {
-          "L": "teal",
-          "R": "teal"
+          "L": "te./assets/pudgi-green-l.pngal",
+          "R": "te./assets/pudgi-green-r.pngal"
           }
         },
       "1": {
         "0": {
-          "L": "white",
-          "R": "white"
+          "L": "./assets/pudgi-white-l.png",
+          "R": "./assets/pudgi-white-r.png"
           },
         "1": {
-          "L": "angel",
-          "R": "angel"
+          "L": "./assets/pudgi-angel-l.png",
+          "R": "./assets/pudgi-angel-r.png"
           }
         }
       }
