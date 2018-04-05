@@ -27,8 +27,8 @@
         "L": "./assets/pudgi-red-l.png",
         "R": "./assets/pudgi-red-r.png"
         }, "1": {
-          "L": "te./assets/pudgi-green-l.pngal",
-          "R": "te./assets/pudgi-green-r.pngal"
+          "L": "./assets/pudgi-green-l.png",
+          "R": "./assets/pudgi-green-r.png"
           }
         },
       "1": {
