@@ -101,7 +101,7 @@ class Pudgi(pygame.sprite.Sprite):
         else:
             number = beta[1:]
 
-        # number = [0, 1, 1]  # todo once the other colors are in place, remove this to allow the system to derive color
+        number = [0, 1, 1]  # todo once the other colors are in place, remove this to allow the system to derive color
         self.handler.load_file("./data/color_metadata.json")
         data = self.handler.get_data()
         node = data["root"]
