@@ -5,21 +5,27 @@ import random
 class Sequencer:
 
     def __init__(self):
-        self.b_chrom_size = 6
-        self.b_chrom_count = 9
+        self.b_chrom_size = 7
+        self.b_chrom_count = 18
         self.c_chrom_size = 4
         self.c_chrom_count = 2
-        self.p_chrom_size = 4
+        self.p_chrom_size = 5
         self.p_chrom_count = 2
-        self.gene_count = self.b_chrom_size*self.b_chrom_count +\
-                          self.c_chrom_size*self.c_chrom_count +\
-                          self.p_chrom_size*self.p_chrom_count
+        self.gene_count = self.b_chrom_size*self.b_chrom_count
+        self.gene_count += self.c_chrom_size*self.c_chrom_count
+        self.gene_count += self.p_chrom_size*self.p_chrom_count
 
     # sequence should return a dictionary of genes which represent the heads of the chromosomes
     def sequence(self):
-        genome = {"behavior": [{"attachment": None}, {"humor": None}, {"enjoyment": None},
-                               {"excitement": None}, {"confidence": None}, {"contentment": None},
-                               {"vitality": None}, {"physical": None}, {"mental": None}],
+        genome = {"behavior": [{"attachment-0": None}, {"attachment-1": None},
+                               {"humor-0": None}, {"humor-1": None},
+                               {"enjoyment-0": None}, {"enjoyment-1": None},
+                               {"excitement-0": None}, {"excitement-1": None},
+                               {"confidence-0": None}, {"confidence-1": None},
+                               {"contentment-0": None}, {"contentment-1": None},
+                               {"vitality-0": None}, {"vitality-1": None},
+                               {"physical-0": None}, {"physical-1": None},
+                               {"mental-0": None}, {"mental-1": None}],
                   "personality": [{"a1": None}, {"a2": None}],
                   "color": [{"a1": None}, {"a2": None}]}
 
@@ -55,7 +61,7 @@ class DNA:
             self.dna.append(random.randint(0, 1))
         return self.dna
 
-    def get_chromosome_values(self, c_type):
+    def get_genomes(self, c_type):
         chromosomes = list(list())
         for k in range(len(self.indices[c_type])):
             chromosome = list()

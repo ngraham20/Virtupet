@@ -1,7 +1,6 @@
 # This file contains the Pudgi creature and its information
 
 import pygame
-import random
 import constants
 from file_handler import JSONHandler
 from spritesheet_functions import SpriteSheet
@@ -60,7 +59,7 @@ class Pudgi(pygame.sprite.Sprite):
         self.handler.save(self.json_object)
         self.handler.close()
 
-        self.decode_dna()
+        self.splice_dna()
 
         # ------- action variables -------
         self.known_actions = []
@@ -86,22 +85,29 @@ class Pudgi(pygame.sprite.Sprite):
 
         self.level = None
 
-    def decode_dna(self):
+    def splice_dna(self):
+        chromosomes = self.dna.get_genomes("behavior")
+        self.decode_behavior(chromosomes)
 
-        # -------------- set up chromosomes -------------
-        b_chroms = self.dna.get_chromosome_values("behavior")
-        c_chroms = self.dna.get_chromosome_values("color")
-        p_chroms = self.dna.get_chromosome_values("personality")
+        chromosomes = self.dna.get_genomes("color")
+        self.decode_color(chromosomes)
 
-        # ---------------- color chromosomes --------------
-        alpha = c_chroms[0]["a1"]
-        beta = c_chroms[1]["a2"]
+        chromosomes = self.dna.get_genomes("personality")
+        self.decode_personality(chromosomes)
+
+    def decode_behavior(self, chromosomes):
+        for chromosome in chromosomes:
+            bin_num = int(''.join(map(str, list(chromosome.values())[0])), base=2)
+            self.weights[list(chromosome.keys())[0]] = 1 / (bin_num + 1)
+
+    def decode_color(self, chromosomes):
+        alpha = chromosomes[0]["a1"]
+        beta = chromosomes[1]["a2"]
         if alpha[0] >= beta[0]:
             number = alpha[1:]
         else:
             number = beta[1:]
 
-        # number = [0, 1, 1]  # todo once the other colors are in place, remove this to allow the system to derive color
         self.handler.load_file("./data/color_metadata.json")
         data = self.handler.get_data()
         node = data["root"]
@@ -112,25 +118,21 @@ class Pudgi(pygame.sprite.Sprite):
         self.sprite_sheet_l = SpriteSheet(node["L"])
         self.sprite_sheet_r = SpriteSheet(node["R"])
 
-        # ----------------- behavior chromosomes -----------
-        for chromosome in b_chroms:
-            bin_num = int(''.join(map(str, list(chromosome.values())[0])), base=2)
-            self.weights[list(chromosome.keys())[0]] = 1/(bin_num + 1)
+    def decode_personality(self, chromosomes):
+        alpha = chromosomes[0]["a1"]
+        beta = chromosomes[1]["a2"]
+        if alpha[0] >= beta[0]:
+            number = alpha[1:]
+        else:
+            number = beta[1:]
 
-        # ----------------- personality chromosomes --------------  todo get files in ./assets/data
-        # alpha = p_chroms[0]["a1"]
-        # beta = p_chroms[1]["a2"]
-        # if alpha[0] >= beta[0]:
-        #     number = alpha[1:]
-        # else:
-        #     number = beta[1:]
-        #
-        # number = [0, 1, 1]  # todo once the values are in place, remove this to allow the system to derive personality
-        # self.handler.load_file("./data/personality_metadata.json")
-        # data = self.handler.get_data()
-        # node = data["root"]
-        # for char in number:
-        #     node = node[str(char)]
+        self.handler.load_file("./data/personality_metadata.json")
+        data = self.handler.get_data()
+        node = data["root"]
+        for char in number:
+            node = node[str(char)]
+
+        print(node)
 
     def load_animations(self):
         # load right animation
