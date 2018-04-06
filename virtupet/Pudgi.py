@@ -10,7 +10,7 @@ from dna import DNA
 
 class Pudgi(pygame.sprite.Sprite):
 
-    def __init__(self, load_file=None):
+    def __init__(self, load_file=None, parents=None):
 
         super().__init__()
 
@@ -31,16 +31,21 @@ class Pudgi(pygame.sprite.Sprite):
             self.import_from_json(load_file)
 
         else:  # create a new pudgi
-            self.name = "Pudgi"
-            self.uid = hex(random.randint(0, 100000))
-            self.dna = DNA()
-            self.dna.gen_rand()  # todo modify this for proper randomization of genes
 
-            self.handler.load_file(constants.PUDGI)
-            self.json_object = self.handler.get_data()
-            self.json_object["dna"] = self.dna.get_strand()
-            self.json_object["uid"] = self.uid
-            self.handler.close()
+            if parents is not None:
+                # todo generate pudgi dna from parents dna
+                print("Not yet implemented")
+            else:
+                self.name = "Pudgi"
+                self.uid = hex(random.randint(0, 100000))
+                self.dna = DNA()
+                self.dna.gen_rand()  # todo modify this for proper randomization of genes
+
+                self.handler.load_file(constants.PUDGI)
+                self.json_object = self.handler.get_data()
+                self.json_object["dna"] = self.dna.get_strand()
+                self.json_object["uid"] = self.uid
+                self.handler.close()
 
         # ------- general data -------
         self.known_decisions = []
