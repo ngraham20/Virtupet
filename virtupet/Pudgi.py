@@ -86,23 +86,32 @@ class Pudgi(pygame.sprite.Sprite):
         self.level = None
 
     def splice_dna(self):
-        chromosomes = self.dna.get_genomes("behavior")
+        chromosomes = self.dna.get_chromosomes("behavior")
         self.decode_behavior(chromosomes)
 
-        chromosomes = self.dna.get_genomes("color")
+        chromosomes = self.dna.get_chromosomes("color")
         self.decode_color(chromosomes)
 
-        chromosomes = self.dna.get_genomes("personality")
+        chromosomes = self.dna.get_chromosomes("personality")
         self.decode_personality(chromosomes)
 
     def decode_behavior(self, chromosomes):
         for chromosome in chromosomes:
-            bin_num = int(''.join(map(str, list(chromosome.values())[0])), base=2)
-            self.weights[list(chromosome.keys())[0]] = 1 / (bin_num + 1)
+            key = list(chromosome.keys())[0]
+            alpha = chromosome[key]["a1"]
+            beta = chromosome[key]["a2"]
+
+            if alpha[0] >= beta[0]:
+                number = alpha[1:]
+            else:
+                number = beta[1:]
+
+            bin_num = int(''.join(map(str, number)), base=2)
+            self.weights[key] = 1 / (bin_num + 1)
 
     def decode_color(self, chromosomes):
-        alpha = chromosomes[0]["a1"]
-        beta = chromosomes[1]["a2"]
+        alpha = chromosomes[0]["color"]["a1"]
+        beta = chromosomes[0]["color"]["a2"]
         if alpha[0] >= beta[0]:
             number = alpha[1:]
         else:
@@ -119,8 +128,8 @@ class Pudgi(pygame.sprite.Sprite):
         self.sprite_sheet_r = SpriteSheet(node["R"])
 
     def decode_personality(self, chromosomes):
-        alpha = chromosomes[0]["a1"]
-        beta = chromosomes[1]["a2"]
+        alpha = chromosomes[0]["personality"]["a1"]
+        beta = chromosomes[0]["personality"]["a2"]
         if alpha[0] >= beta[0]:
             number = alpha[1:]
         else:
