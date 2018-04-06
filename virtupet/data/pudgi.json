@@ -1,8 +1,9 @@
 {
+    "uid": null,
     "name": "Pudgi",
-    "UID": null,
-    "parents": [null, null],
+    "color": null,
     "personality": null,
+    "parents": [null, null],
     "known_decisions": [],
     "dna": []
 }

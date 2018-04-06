@@ -10,7 +10,7 @@ from dna import DNA
 
 class Pudgi(pygame.sprite.Sprite):
 
-    def __init__(self, load = None):
+    def __init__(self, load_file=None):
 
         super().__init__()
 
@@ -23,13 +23,12 @@ class Pudgi(pygame.sprite.Sprite):
 
         self.handler = JSONHandler()
 
-        if load is not None:  # load should be a filename
-            self.handler.load_file(load)
-            self.json_object = self.handler.get_data()
-            self.name = self.json_object["name"]
-            self.uid = self.json_object["UID"]
-            strand = self.json_object["dna"]
-            self.dna = DNA(strand)
+        self.personality = None
+        self.color = None
+        self.parents = [None, None]
+
+        if load_file is not None:  # load should be a filename
+            self.import_from_json(load_file)
 
         else:  # create a new pudgi
             self.name = "Pudgi"
@@ -40,16 +39,14 @@ class Pudgi(pygame.sprite.Sprite):
             self.handler.load_file(constants.PUDGI)
             self.json_object = self.handler.get_data()
             self.json_object["dna"] = self.dna.get_strand()
-            self.json_object["UID"] = self.uid
+            self.json_object["uid"] = self.uid
+            self.handler.close()
 
-        self.handler.close()
+        # ------- general data -------
+        self.known_decisions = []
+        self.known_decisions = self.json_object["known_decisions"]
 
         self.splice_dna()
-
-        self.export_to_json()
-
-        # ------- action variables -------
-        self.known_actions = self.json_object["known_decisions"]
 
         # ------- animation variables -------
         self.change_x = 0
@@ -113,6 +110,9 @@ class Pudgi(pygame.sprite.Sprite):
         self.sprite_sheet_l = SpriteSheet(node["L"])
         self.sprite_sheet_r = SpriteSheet(node["R"])
 
+        # set color from dna
+        self.color = node["Color"]
+
     def decode_personality(self, chromosomes):
         alpha = chromosomes[0]["personality"]["a1"]
         beta = chromosomes[0]["personality"]["a2"]
@@ -127,7 +127,7 @@ class Pudgi(pygame.sprite.Sprite):
         for char in number:
             node = node[str(char)]
 
-        print(node)
+        self.personality = node
 
     def load_animations(self):
         # load right animation
@@ -187,7 +187,38 @@ class Pudgi(pygame.sprite.Sprite):
         # make decision
         return
 
+    def import_from_json(self, load):
+        self.handler.load_file(load)
+        self.json_object = self.handler.get_data()
+        self.name = self.json_object["name"]
+        self.uid = self.json_object["uid"]
+        self.parents = self.json_object["parents"]
+        self.personality = self.json_object["personality"]
+        self.color = self.json_object["color"]
+        strand = self.json_object["dna"]
+        self.dna = DNA(strand)
+        self.handler.close()
+
+        print("---Importing Pudgi---")
+        print("UID: " + str(self.uid))
+        print("Name: " + self.name)
+        print("Color: " + self.color)
+        print("Personality: " + self.personality)
+        print("Parents: " + str(self.parents))
+
     def export_to_json(self):
         # write information about self to a json file
+        self.json_object["color"] = self.color
+        self.json_object["personality"] = self.personality
+        self.json_object["known_decisions"] = self.known_decisions
+        self.json_object["parents"] = self.parents
+
         self.handler.save_as("./data/pudgies/" + self.uid + ".json", self.json_object)
+
+        print("---Exporting Pudgi---")
+        print("UID: " + str(self.uid))
+        print("Name: " + self.name)
+        print("Color: " + self.color)
+        print("Personality: " + self.personality)
+        print("Parents: " + str(self.parents))
         return

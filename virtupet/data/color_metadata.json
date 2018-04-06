@@ -3,20 +3,25 @@
   "0": {
     "0": {
       "0": {
+        "Color": "Vampire",
         "L": "./assets/pudgi-vampire-l.png",
         "R": "./assets/pudgi-vampire-r.png"
         },
       "1": {
+        "Color": "Midnight",
         "L": "./assets/pudgi-midnight-l.png",
         "R": "./assets/pudgi-midnight-r.png"
         }
       },
     "1": {
       "0": {
+        "Color": "Purple",
         "L": "./assets/pudgi-purple-l.png",
         "R": "./assets/pudgi-purple-r.png"
         },
-      "1": {"L": "./assets/pudgi-blue-l.png",
+      "1": {
+        "Color": "Blue",
+        "L": "./assets/pudgi-blue-l.png",
         "R": "./assets/pudgi-blue-r.png"
         }
       }
@@ -24,19 +29,23 @@
   "1": {
     "0": {
       "0": {
+        "Color": "Red",
         "L": "./assets/pudgi-red-l.png",
         "R": "./assets/pudgi-red-r.png"
         }, "1": {
+          "Color": "Green",
           "L": "./assets/pudgi-green-l.png",
           "R": "./assets/pudgi-green-r.png"
           }
         },
       "1": {
         "0": {
+          "Color": "White",
           "L": "./assets/pudgi-white-l.png",
           "R": "./assets/pudgi-white-r.png"
           },
         "1": {
+          "Color": "Angel",
           "L": "./assets/pudgi-angel-l.png",
           "R": "./assets/pudgi-angel-r.png"
           }
