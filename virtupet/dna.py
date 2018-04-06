@@ -64,10 +64,13 @@ class Sequencer:
 
 class DNA:
 
-    def __init__(self):
+    def __init__(self, dna=None):
 
         self.sequencer = Sequencer()
-        self.dna = []
+        if dna is not None:
+            self.dna = dna
+        else:
+            self.dna = []
         self.indices = self.sequencer.sequence()
 
     def gen_rand(self):
@@ -114,6 +117,9 @@ class DNA:
 
         return chromosomes
 
-    def get_dna_strand(self):
+    def get_strand(self):
         return self.dna
+
+    def set_strand(self, strand):
+        self.dna = strand
 

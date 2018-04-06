@@ -12,7 +12,7 @@ from pudgi import Pudgi
 def main():
 
     handler = JSONHandler()
-    handler.load_file(constants.BLUEPUDGI)
+    handler.load_file(constants.PUDGI)
     json_object = handler.get_data()
 
     # ----------- pygame objects -----------
@@ -23,7 +23,8 @@ def main():
 
     pygame.display.set_caption(json_object["name"])
 
-    agent = Pudgi()
+    agent = Pudgi("./data/pudgies/0x7b26.json")
+    # agent = Pudgi()
 
     env_list = [environments.EnvironmentHouse(agent)]
 

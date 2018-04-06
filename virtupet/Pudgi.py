@@ -1,6 +1,7 @@
 # This file contains the Pudgi creature and its information
 
 import pygame
+import random
 import constants
 from file_handler import JSONHandler
 from spritesheet_functions import SpriteSheet
@@ -9,32 +10,46 @@ from dna import DNA
 
 class Pudgi(pygame.sprite.Sprite):
 
-    def __init__(self):
+    def __init__(self, load = None):
 
         super().__init__()
 
-        self.name = None
+        # self.name = None
+        # self.uid = None
 
         self.weights = {}
-
         self.sprite_sheet_l = None
         self.sprite_sheet_r = None
 
-        self.dna = DNA()
-        self.dna.gen_rand()  # todo modify this for proper randomization of genes
-
         self.handler = JSONHandler()
-        self.handler.load_file(constants.BLUEPUDGI)
-        self.json_object = self.handler.get_data()
-        self.json_object["dna"] = self.dna.get_dna_strand()
-        self.handler.save(self.json_object)
+
+        if load is not None:  # load should be a filename
+            self.handler.load_file(load)
+            self.json_object = self.handler.get_data()
+            self.name = self.json_object["name"]
+            self.uid = self.json_object["UID"]
+            strand = self.json_object["dna"]
+            self.dna = DNA(strand)
+
+        else:  # create a new pudgi
+            self.name = "Pudgi"
+            self.uid = hex(random.randint(0, 100000))
+            self.dna = DNA()
+            self.dna.gen_rand()  # todo modify this for proper randomization of genes
+
+            self.handler.load_file(constants.PUDGI)
+            self.json_object = self.handler.get_data()
+            self.json_object["dna"] = self.dna.get_strand()
+            self.json_object["UID"] = self.uid
+
         self.handler.close()
 
         self.splice_dna()
 
+        self.export_to_json()
+
         # ------- action variables -------
-        self.known_actions = []
-        self.new_actions = []
+        self.known_actions = self.json_object["known_decisions"]
 
         # ------- animation variables -------
         self.change_x = 0
@@ -172,6 +187,7 @@ class Pudgi(pygame.sprite.Sprite):
         # make decision
         return
 
-    def export(self):
+    def export_to_json(self):
         # write information about self to a json file
+        self.handler.save_as("./data/pudgies/" + self.uid + ".json", self.json_object)
         return
