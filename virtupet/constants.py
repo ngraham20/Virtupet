@@ -13,5 +13,5 @@ SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 600
 
 # pudgi file location
-PUDGI = './data/pudgi.json'
+DEFAULT_PUDGI = './data/pudgies/default.json'
 

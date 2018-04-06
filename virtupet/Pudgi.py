@@ -10,7 +10,7 @@ from dna import DNA
 
 class Pudgi(pygame.sprite.Sprite):
 
-    def __init__(self, load_file=None, parents=None):
+    def __init__(self, parents=None, load_file=None):
 
         super().__init__()
 
@@ -32,20 +32,23 @@ class Pudgi(pygame.sprite.Sprite):
 
         else:  # create a new pudgi
 
+            self.name = "Pudgi"
+            self.uid = hex(random.randint(0, 100000))
+
             if parents is not None:
-                # todo generate pudgi dna from parents dna
-                print("Not yet implemented")
+                alpha = parents[0]
+                beta = parents[1]
+                self.dna = Pudgi.generate_dna_from(alpha, beta)
+                self.parents = parents
             else:
-                self.name = "Pudgi"
-                self.uid = hex(random.randint(0, 100000))
                 self.dna = DNA()
                 self.dna.gen_rand()  # todo modify this for proper randomization of genes
 
-                self.handler.load_file(constants.PUDGI)
-                self.json_object = self.handler.get_data()
-                self.json_object["dna"] = self.dna.get_strand()
-                self.json_object["uid"] = self.uid
-                self.handler.close()
+            self.handler.load_file(constants.DEFAULT_PUDGI)
+            self.json_object = self.handler.get_data()
+            self.json_object["dna"] = self.dna.get_strand()
+            self.json_object["uid"] = self.uid
+            self.handler.close()
 
         # ------- general data -------
         self.known_decisions = []
@@ -72,6 +75,24 @@ class Pudgi(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         self.level = None
+
+    @staticmethod
+    def generate_dna_from(alpha, beta):
+        handler = JSONHandler()
+        handler.load_file("./data/pudgies/" + alpha + ".json")
+        alpha_json = handler.get_data()
+        handler.load_file("./data/pudgies/" + beta + ".json")
+        beta_json = handler.get_data()
+
+        alpha_dna = DNA(alpha_json["dna"])
+        beta_dna = DNA(beta_json["dna"])
+
+        strand = DNA.combine_dna(alpha_dna, beta_dna)
+        return DNA(strand)
+
+    def mutate_dna(self):
+        # todo give some odd chance to mutate dna
+        print("Unimplemented function")
 
     def splice_dna(self):
         chromosomes = self.dna.get_chromosomes("behavior")
@@ -178,11 +199,11 @@ class Pudgi(pygame.sprite.Sprite):
             self.current_frame = 0
 
     def go_right(self):
-        self.change_x = 6
+        self.change_x = 3
         self.direction = "R"
 
     def go_left(self):
-        self.change_x = -6
+        self.change_x = -3
         self.direction = "L"
 
     def stop(self):
