@@ -117,6 +117,3 @@ class DNA:
     def get_dna_strand(self):
         return self.dna
 
-# my_dna = DNA()
-# my_dna.gen_rand()
-# print(my_dna.get_chromosome_values("personality"))
