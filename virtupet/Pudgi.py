@@ -39,6 +39,7 @@ class Pudgi(pygame.sprite.Sprite):
                 alpha = parents[0]
                 beta = parents[1]
                 self.dna = Pudgi.generate_dna_from(alpha, beta)
+                Pudgi.mutate_dna_strand(self.dna.get_strand())
                 self.parents = parents
             else:
                 self.dna = DNA()
@@ -90,9 +91,14 @@ class Pudgi(pygame.sprite.Sprite):
         strand = DNA.combine_dna(alpha_dna, beta_dna)
         return DNA(strand)
 
-    def mutate_dna(self):
-        # todo give some odd chance to mutate dna
-        print("Unimplemented function")
+    @staticmethod
+    def mutate_dna_strand(strand):
+        count = random.randint(1, 5)
+        chance = 0.1  # each attempt has a 1/10 chance of mutation
+        for num in range(count):
+            index = random.randint(0, len(strand) - 1)
+            if random.random() <= chance:
+                strand[index] = 0 if strand[index] else 1
 
     def splice_dna(self):
         chromosomes = self.dna.get_chromosomes("behavior")
@@ -110,8 +116,10 @@ class Pudgi(pygame.sprite.Sprite):
             alpha = chromosome[key]["a1"]
             beta = chromosome[key]["a2"]
 
-            if alpha[0] >= beta[0]:
+            if alpha[0] > beta[0]:
                 number = alpha[1:]
+            elif alpha[0] == beta[0]:
+                number = random.choice([alpha, beta])[1:]
             else:
                 number = beta[1:]
 
@@ -121,8 +129,10 @@ class Pudgi(pygame.sprite.Sprite):
     def decode_color(self, chromosomes):
         alpha = chromosomes[0]["color"]["a1"]
         beta = chromosomes[0]["color"]["a2"]
-        if alpha[0] >= beta[0]:
+        if alpha[0] > beta[0]:
             number = alpha[1:]
+        elif alpha[0] == beta[0]:
+            number = random.choice([alpha, beta])[1:]
         else:
             number = beta[1:]
 
@@ -142,8 +152,10 @@ class Pudgi(pygame.sprite.Sprite):
     def decode_personality(self, chromosomes):
         alpha = chromosomes[0]["personality"]["a1"]
         beta = chromosomes[0]["personality"]["a2"]
-        if alpha[0] >= beta[0]:
+        if alpha[0] > beta[0]:
             number = alpha[1:]
+        elif alpha[0] == beta[0]:
+            number = random.choice([alpha, beta])[1:]
         else:
             number = beta[1:]
 
