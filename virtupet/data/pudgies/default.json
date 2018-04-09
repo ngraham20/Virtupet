@@ -1,7 +1,6 @@
 {
     "uid": null,
     "name": "Pudgi",
-<<<<<<< HEAD
     "dna": [
         0,
         1,
@@ -74,11 +73,8 @@
         1,
         1
     ],
-=======
     "color": null,
->>>>>>> f43a04c316007e4b980335691d51d1eb266d9c1e
     "personality": null,
     "parents": [null, null],
-    "known_decisions": [],
-    "dna": []
+    "known_decisions": []
 }
