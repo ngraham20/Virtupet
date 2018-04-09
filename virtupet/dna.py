@@ -117,6 +117,46 @@ class DNA:
 
         return chromosomes
 
+    @staticmethod
+    def combine_dna(p1, p2):
+        """
+
+        :param p1:
+        :type p1: DNA
+        :param p2:
+        :type p2: DNA
+        """
+
+        p1_chromosomes = p1.get_chromosomes("behavior")
+        p1_chromosomes += p1.get_chromosomes("personality")
+        p1_chromosomes += p1.get_chromosomes("color")
+        p2_chromosomes = p2.get_chromosomes("behavior")
+        p2_chromosomes += p2.get_chromosomes("personality")
+        p2_chromosomes += p2.get_chromosomes("color")
+
+        child_chrom_alpha = list()
+        child_chrom_beta = list()
+
+        for chromosome in p1_chromosomes:
+            key = list(chromosome.keys())[0]
+            genome = list()
+            genome.append(chromosome[key]["a1"])
+            genome.append(chromosome[key]["a2"])
+            child_chrom_alpha.append(random.choice(genome))
+
+        for chromosome in p2_chromosomes:
+            key = list(chromosome.keys())[0]
+            genome = list()
+            genome.append(chromosome[key]["a1"])
+            genome.append(chromosome[key]["a2"])
+            child_chrom_beta.append(random.choice(genome))
+
+        child_chromosomes = [list()]*(len(child_chrom_alpha) + len(child_chrom_beta))
+        child_chromosomes[::2] = child_chrom_alpha
+        child_chromosomes[1::2] = child_chrom_beta
+
+        return (lambda chroms: [gene for chrom in chroms for gene in chrom])(child_chromosomes)
+
     def get_strand(self):
         return self.dna
 

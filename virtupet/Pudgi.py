@@ -10,7 +10,7 @@ from dna import DNA
 
 class Pudgi(pygame.sprite.Sprite):
 
-    def __init__(self, load_file=None):
+    def __init__(self, parents=None, load_file=None):
 
         super().__init__()
 
@@ -31,12 +31,21 @@ class Pudgi(pygame.sprite.Sprite):
             self.import_from_json(load_file)
 
         else:  # create a new pudgi
+
             self.name = "Pudgi"
             self.uid = hex(random.randint(0, 100000))
-            self.dna = DNA()
-            self.dna.gen_rand()  # todo modify this for proper randomization of genes
 
-            self.handler.load_file(constants.PUDGI)
+            if parents is not None:
+                alpha = parents[0]
+                beta = parents[1]
+                self.dna = Pudgi.generate_dna_from(alpha, beta)
+                Pudgi.mutate_dna_strand(self.dna.get_strand())
+                self.parents = parents
+            else:
+                self.dna = DNA()
+                self.dna.gen_rand()  # todo modify this for proper randomization of genes
+
+            self.handler.load_file(constants.DEFAULT_PUDGI)
             self.json_object = self.handler.get_data()
             self.json_object["dna"] = self.dna.get_strand()
             self.json_object["uid"] = self.uid
@@ -68,6 +77,29 @@ class Pudgi(pygame.sprite.Sprite):
 
         self.level = None
 
+    @staticmethod
+    def generate_dna_from(alpha, beta):
+        handler = JSONHandler()
+        handler.load_file("./data/pudgies/" + alpha + ".json")
+        alpha_json = handler.get_data()
+        handler.load_file("./data/pudgies/" + beta + ".json")
+        beta_json = handler.get_data()
+
+        alpha_dna = DNA(alpha_json["dna"])
+        beta_dna = DNA(beta_json["dna"])
+
+        strand = DNA.combine_dna(alpha_dna, beta_dna)
+        return DNA(strand)
+
+    @staticmethod
+    def mutate_dna_strand(strand):
+        count = random.randint(1, 5)
+        chance = 0.1  # each attempt has a 1/10 chance of mutation
+        for num in range(count):
+            index = random.randint(0, len(strand) - 1)
+            if random.random() <= chance:
+                strand[index] = 0 if strand[index] else 1
+
     def splice_dna(self):
         chromosomes = self.dna.get_chromosomes("behavior")
         self.decode_behavior(chromosomes)
@@ -84,8 +116,10 @@ class Pudgi(pygame.sprite.Sprite):
             alpha = chromosome[key]["a1"]
             beta = chromosome[key]["a2"]
 
-            if alpha[0] >= beta[0]:
+            if alpha[0] > beta[0]:
                 number = alpha[1:]
+            elif alpha[0] == beta[0]:
+                number = random.choice([alpha, beta])[1:]
             else:
                 number = beta[1:]
 
@@ -95,8 +129,10 @@ class Pudgi(pygame.sprite.Sprite):
     def decode_color(self, chromosomes):
         alpha = chromosomes[0]["color"]["a1"]
         beta = chromosomes[0]["color"]["a2"]
-        if alpha[0] >= beta[0]:
+        if alpha[0] > beta[0]:
             number = alpha[1:]
+        elif alpha[0] == beta[0]:
+            number = random.choice([alpha, beta])[1:]
         else:
             number = beta[1:]
 
@@ -116,8 +152,10 @@ class Pudgi(pygame.sprite.Sprite):
     def decode_personality(self, chromosomes):
         alpha = chromosomes[0]["personality"]["a1"]
         beta = chromosomes[0]["personality"]["a2"]
-        if alpha[0] >= beta[0]:
+        if alpha[0] > beta[0]:
             number = alpha[1:]
+        elif alpha[0] == beta[0]:
+            number = random.choice([alpha, beta])[1:]
         else:
             number = beta[1:]
 
@@ -173,11 +211,11 @@ class Pudgi(pygame.sprite.Sprite):
             self.current_frame = 0
 
     def go_right(self):
-        self.change_x = 6
+        self.change_x = 3
         self.direction = "R"
 
     def go_left(self):
-        self.change_x = -6
+        self.change_x = -3
         self.direction = "L"
 
     def stop(self):
