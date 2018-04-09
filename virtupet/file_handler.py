@@ -23,3 +23,8 @@ class JSONHandler:
     def save(self, json_data):
         with open(self.file_name, 'w') as f:
             json.dump(json_data, f, indent=4)
+
+    @staticmethod
+    def save_as(file_name, json_data):
+        with open(file_name, 'w') as f:
+            json.dump(json_data, f, indent=4)
