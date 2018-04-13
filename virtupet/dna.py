@@ -13,17 +13,17 @@ class Sequencer:
         self.c_genome_count = 1
         self.c_chrom_count = self.c_genome_count * 2
 
-        self.p_chrom_size = 5
-        self.p_genome_count = 1
-        self.p_chrom_count = self.p_genome_count * 2
+        # self.p_chrom_size = 5
+        # self.p_genome_count = 1
+        # self.p_chrom_count = self.p_genome_count * 2
 
         self.genome_count = self.b_genome_count
-        self.genome_count += self.p_genome_count
+        # self.genome_count += self.p_genome_count
         self.genome_count += self.c_genome_count
 
         self.gene_count = self.b_chrom_size*self.b_chrom_count
         self.gene_count += self.c_chrom_size*self.c_chrom_count
-        self.gene_count += self.p_chrom_size*self.p_chrom_count
+        # self.gene_count += self.p_chrom_size*self.p_chrom_count
 
     # sequence should return a dictionary of genes which represent the heads of the chromosomes
     def sequence(self):
@@ -38,7 +38,6 @@ class Sequencer:
                   {"vitality": {"a1": 0, "a2": 0}},
                   {"physical": {"a1": 0, "a2": 0}},
                   {"mental": {"a1": 0, "a2": 0}},
-                  {"personality": {"a1": 0, "a2": 0}},
                   {"color": {"a1": 0, "a2": 0}
                    }]
         index = 0
@@ -48,16 +47,16 @@ class Sequencer:
             strand[k][key]["a2"] = self.b_chrom_size * (2 * k + 1)
             index += 1
 
-        p_begining = self.b_chrom_size * self.b_chrom_count
+        c_begining = self.b_chrom_size * self.b_chrom_count
         key = list(strand[self.b_genome_count:self.b_genome_count + 1][0].keys())[0]
-        strand[index][key]["a1"] = p_begining
-        strand[index][key]["a2"] = p_begining + self.p_chrom_size
-        index += 1
-
-        c_begining = p_begining + self.p_chrom_size * self.p_chrom_count
-        key = list(strand[self.b_genome_count + self.p_genome_count:][0].keys())[0]
         strand[index][key]["a1"] = c_begining
         strand[index][key]["a2"] = c_begining + self.c_chrom_size
+        index += 1
+
+        # c_begining = self.b_chrom_size * self.b_chrom_count
+        # key = list(strand[self.b_genome_count + self.p_genome_count:][0].keys())[0]
+        # strand[index][key]["a1"] = c_begining
+        # strand[index][key]["a2"] = c_begining + self.c_chrom_size
 
         return strand
 
@@ -86,14 +85,14 @@ class DNA:
             index_count = self.sequencer.b_chrom_size
             genome_count = self.sequencer.b_genome_count
             genome_loc = 0
-        elif c_type == "personality":
-            index_count = self.sequencer.p_chrom_size
-            genome_count = self.sequencer.p_genome_count
-            genome_loc = self.sequencer.b_genome_count
         elif c_type == "color":
             index_count = self.sequencer.c_chrom_size
             genome_count = self.sequencer.c_genome_count
-            genome_loc = self.sequencer.b_genome_count + self.sequencer.p_genome_count
+            genome_loc = self.sequencer.b_genome_count
+        # elif c_type == "color":
+        #     index_count = self.sequencer.c_chrom_size
+        #     genome_count = self.sequencer.c_genome_count
+        #     genome_loc = self.sequencer.b_genome_count + self.sequencer.p_genome_count
         else:
             index_count = -1
             genome_loc = -1
@@ -128,10 +127,10 @@ class DNA:
         """
 
         p1_chromosomes = p1.get_chromosomes("behavior")
-        p1_chromosomes += p1.get_chromosomes("personality")
+        # p1_chromosomes += p1.get_chromosomes("personality")
         p1_chromosomes += p1.get_chromosomes("color")
         p2_chromosomes = p2.get_chromosomes("behavior")
-        p2_chromosomes += p2.get_chromosomes("personality")
+        # p2_chromosomes += p2.get_chromosomes("personality")
         p2_chromosomes += p2.get_chromosomes("color")
 
         child_chrom_alpha = list()

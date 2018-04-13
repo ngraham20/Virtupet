@@ -107,8 +107,8 @@ class Pudgi(pygame.sprite.Sprite):
         chromosomes = self.dna.get_chromosomes("color")
         self.decode_color(chromosomes)
 
-        chromosomes = self.dna.get_chromosomes("personality")
-        self.decode_personality(chromosomes)
+        # chromosomes = self.dna.get_chromosomes("personality")
+        # self.decode_personality(chromosomes)
 
     def decode_behavior(self, chromosomes):
         for chromosome in chromosomes:
@@ -149,23 +149,23 @@ class Pudgi(pygame.sprite.Sprite):
         # set color from dna
         self.color = node["Color"]
 
-    def decode_personality(self, chromosomes):
-        alpha = chromosomes[0]["personality"]["a1"]
-        beta = chromosomes[0]["personality"]["a2"]
-        if alpha[0] > beta[0]:
-            number = alpha[1:]
-        elif alpha[0] == beta[0]:
-            number = random.choice([alpha, beta])[1:]
-        else:
-            number = beta[1:]
-
-        self.handler.load_file("./data/personality_metadata.json")
-        data = self.handler.get_data()
-        node = data["root"]
-        for char in number:
-            node = node[str(char)]
-
-        self.personality = node
+    # def decode_personality(self, chromosomes):
+    #     alpha = chromosomes[0]["personality"]["a1"]
+    #     beta = chromosomes[0]["personality"]["a2"]
+    #     if alpha[0] > beta[0]:
+    #         number = alpha[1:]
+    #     elif alpha[0] == beta[0]:
+    #         number = random.choice([alpha, beta])[1:]
+    #     else:
+    #         number = beta[1:]
+    #
+    #     self.handler.load_file("./data/personality_metadata.json")
+    #     data = self.handler.get_data()
+    #     node = data["root"]
+    #     for char in number:
+    #         node = node[str(char)]
+    #
+    #     self.personality = node
 
     def load_animations(self):
         # load right animation
@@ -247,7 +247,7 @@ class Pudgi(pygame.sprite.Sprite):
     def export_to_json(self):
         # write information about self to a json file
         self.json_object["color"] = self.color
-        self.json_object["personality"] = self.personality
+        # self.json_object["personality"] = self.personality
         self.json_object["known_decisions"] = self.known_decisions
         self.json_object["parents"] = self.parents
 
@@ -257,6 +257,6 @@ class Pudgi(pygame.sprite.Sprite):
         print("UID: " + str(self.uid))
         print("Name: " + self.name)
         print("Color: " + self.color)
-        print("Personality: " + self.personality)
+        # print("Personality: " + self.personality)
         print("Parents: " + str(self.parents))
         return
