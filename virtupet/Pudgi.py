@@ -295,7 +295,7 @@ class Pudgi(pygame.sprite.Sprite):
     def export_to_json(self):
         # write information about self to a json file
         self.json_object["color"] = self.color
-        self.json_object["personality"] = self.personality
+        # self.json_object["personality"] = self.personality
         self.json_object["known_decisions"] = self.known_decisions
         self.json_object["parents"] = self.parents
 
@@ -305,6 +305,6 @@ class Pudgi(pygame.sprite.Sprite):
         print("UID: " + str(self.uid))
         print("Name: " + self.name)
         print("Color: " + self.color)
-        print("Personality: " + self.personality)
+        # print("Personality: " + self.personality)
         print("Parents: " + str(self.parents))
         return

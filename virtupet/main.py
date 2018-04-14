@@ -6,14 +6,16 @@ import pygame
 import constants
 import environments
 from file_handler import JSONHandler
+from clock import Clock
 from pudgi import Pudgi
 
 
 def main():
-
     handler = JSONHandler()
     handler.load_file(constants.DEFAULT_PUDGI)
     json_object = handler.get_data()
+
+    time_clock = Clock()
 
     # ----------- pygame objects -----------
     pygame.init()
@@ -23,9 +25,9 @@ def main():
 
     pygame.display.set_caption(json_object["name"])
 
-    #parents = ["0x9e45", "0x987b"]
-    #agent = Pudgi(parents)
-    #agent = Pudgi(None, "./data/pudgies/0x177a8.json")
+    parents = ["0x9c08", "0x11e66"]
+    # agent = Pudgi(parents)
+    # agent = Pudgi(None, "./data/pudgies/0x9c08.json")
     agent = Pudgi()
     env_list = [environments.EnvironmentHouse(agent)]
 
@@ -53,6 +55,11 @@ def main():
 
     # --------------Main While loop---------------
     while not done:
+
+        if time_clock.elapsed_time() > time_clock.cur_time:
+            time_clock.update_time()
+            print(time_clock.time_stamp())
+
         for event in pygame.event.get():  # User did something
             if event.type == pygame.QUIT:  # If user clicked close
                 done = True  # Flag that we are done so we exit this loop
