@@ -306,6 +306,6 @@ class Pudgi(pygame.sprite.Sprite):
         print("UID: " + str(self.uid))
         print("Name: " + self.name)
         print("Color: " + self.color)
-        print("Personality: " + str(self.personality))
+        # print("Personality: " + self.personality)
         print("Parents: " + str(self.parents))
         return
