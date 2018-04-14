@@ -107,8 +107,8 @@ class Pudgi(pygame.sprite.Sprite):
         chromosomes = self.dna.get_chromosomes("color")
         self.decode_color(chromosomes)
 
-        chromosomes = self.dna.get_chromosomes("personality")
-        self.decode_personality(chromosomes)
+        # chromosomes = self.dna.get_chromosomes("personality")
+        # self.decode_personality(chromosomes)
 
     def decode_behavior(self, chromosomes):
         for chromosome in chromosomes:
@@ -123,7 +123,7 @@ class Pudgi(pygame.sprite.Sprite):
             else:
                 number = beta[1:]
 
-            bin_num = int(''.join(map(str, number)), base=2)
+            bin_num = int(''.join(map(str, number)), base=2) #bin_num is the actual number out of 63
             self.weights[key] = 1 / (bin_num + 1)
 
     def decode_color(self, chromosomes):
@@ -149,23 +149,71 @@ class Pudgi(pygame.sprite.Sprite):
         # set color from dna
         self.color = node["Color"]
 
-    def decode_personality(self, chromosomes):
-        alpha = chromosomes[0]["personality"]["a1"]
-        beta = chromosomes[0]["personality"]["a2"]
-        if alpha[0] > beta[0]:
-            number = alpha[1:]
-        elif alpha[0] == beta[0]:
-            number = random.choice([alpha, beta])[1:]
-        else:
-            number = beta[1:]
-
-        self.handler.load_file("./data/personality_metadata.json")
+    # def decode_personality(self, chromosomes):
+    #     alpha = chromosomes[0]["personality"]["a1"]
+    #     beta = chromosomes[0]["personality"]["a2"]
+    #     if alpha[0] > beta[0]:
+    #         number = alpha[1:]
+    #     elif alpha[0] == beta[0]:
+    #         number = random.choice([alpha, beta])[1:]
+    #     else:
+    #         number = beta[1:]
+    #
+    #     self.handler.load_file("./data/personality_metadata.json")
+    #     data = self.handler.get_data()
+    #     node = data["root"]
+    #     for char in number:
+    #         node = node[str(char)]
+    #
+    #     self.personality = node
+    def decode_personality(self):
+        self.handler.load_file("./data/meyers_metadata.json")
         data = self.handler.get_data()
-        node = data["root"]
-        for char in number:
-            node = node[str(char)]
+        attribute = []
+        attachment = self.weights["attachment"]
+        attachment = (pow(attachment, -1)) % 16
+        attribute.append(data["attachment"][attachment])
 
-        self.personality = node
+        humor = self.weights["humor"]
+        humor = (pow(humor, -1)) % 16
+        attribute.append(data["humor"][humor])
+
+        enjoyment = self.weights["enjoyment"]
+        enjoyment = (pow(enjoyment, -1)) % 16
+        attribute.append(data["enjoyment"][enjoyment])
+
+        confidence = self.weights["confidence"]
+        confidence = (pow(confidence, -1)) % 16
+        attribute.append(data["confidence"][confidence])
+
+        contentment = self.weights["contentment"]
+        contentment = (pow(contentment, -1)) % 16
+        attribute.append(data["contentment"][contentment])
+
+        vitality = self.weights["vitality"]
+        vitality = (pow(vitality, -1)) % 16
+        attribute.append(data["vitality"][vitality])
+
+        physical = self.weights["physical"]
+        physical = (pow(physical, -1)) % 16
+        attribute.append(data["physical"][physical])
+
+        mental = self.weights["mental"]
+        mental = (pow(mental, -1)) % 16
+        attribute.append(data["mental"][mental])
+
+        personality = self.weights["personality"]
+        personality = (pow(personality, -1)) % 16
+        attribute.append(data["personality"][personality])
+
+        most_common = None
+        most = 0
+        for item in attribute:
+            num = attribute.count(item)
+            if num > most:
+                most = num
+                most_common = item
+        self.personality = most_common
 
     def load_animations(self):
         # load right animation
