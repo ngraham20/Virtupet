@@ -108,7 +108,7 @@ class Pudgi(pygame.sprite.Sprite):
         self.decode_color(chromosomes)
 
         # chromosomes = self.dna.get_chromosomes("personality")
-        # self.decode_personality(chromosomes)
+        self.decode_personality()
 
     def decode_behavior(self, chromosomes):
         for chromosome in chromosomes:
@@ -171,40 +171,40 @@ class Pudgi(pygame.sprite.Sprite):
         data = self.handler.get_data()
         attribute = []
         attachment = self.weights["attachment"]
-        attachment = (pow(attachment, -1)) % 16
+        attachment = int((pow(attachment, -1)) % 16)
         attribute.append(data["attachment"][attachment])
 
         humor = self.weights["humor"]
-        humor = (pow(humor, -1)) % 16
+        humor = int((pow(humor, -1)) % 16)
         attribute.append(data["humor"][humor])
 
         enjoyment = self.weights["enjoyment"]
-        enjoyment = (pow(enjoyment, -1)) % 16
+        enjoyment = int((pow(enjoyment, -1)) % 16)
         attribute.append(data["enjoyment"][enjoyment])
 
         confidence = self.weights["confidence"]
-        confidence = (pow(confidence, -1)) % 16
+        confidence = int((pow(confidence, -1)) % 16)
         attribute.append(data["confidence"][confidence])
 
         contentment = self.weights["contentment"]
-        contentment = (pow(contentment, -1)) % 16
+        contentment = int((pow(contentment, -1)) % 16)
         attribute.append(data["contentment"][contentment])
 
         vitality = self.weights["vitality"]
-        vitality = (pow(vitality, -1)) % 16
+        vitality = int((pow(vitality, -1)) % 16)
         attribute.append(data["vitality"][vitality])
 
         physical = self.weights["physical"]
-        physical = (pow(physical, -1)) % 16
+        physical = int((pow(physical, -1)) % 16)
         attribute.append(data["physical"][physical])
 
         mental = self.weights["mental"]
-        mental = (pow(mental, -1)) % 16
+        mental = int((pow(mental, -1)) % 16)
         attribute.append(data["mental"][mental])
 
-        personality = self.weights["personality"]
-        personality = (pow(personality, -1)) % 16
-        attribute.append(data["personality"][personality])
+        #personality = self.weights["personality"]
+        #personality = int((pow(personality, -1)) % 16)
+        #attribute.append(data["personality"][personality])
 
         most_common = None
         most = 0
@@ -213,6 +213,7 @@ class Pudgi(pygame.sprite.Sprite):
             if num > most:
                 most = num
                 most_common = item
+
         self.personality = most_common
 
     def load_animations(self):
@@ -295,7 +296,7 @@ class Pudgi(pygame.sprite.Sprite):
     def export_to_json(self):
         # write information about self to a json file
         self.json_object["color"] = self.color
-        # self.json_object["personality"] = self.personality
+        #self.json_object["personality"] = self.personality
         self.json_object["known_decisions"] = self.known_decisions
         self.json_object["parents"] = self.parents
 
@@ -305,6 +306,6 @@ class Pudgi(pygame.sprite.Sprite):
         print("UID: " + str(self.uid))
         print("Name: " + self.name)
         print("Color: " + self.color)
-        # print("Personality: " + self.personality)
+        print("Personality: " + str(self.personality))
         print("Parents: " + str(self.parents))
         return
