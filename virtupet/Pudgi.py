@@ -24,6 +24,7 @@ class Pudgi(pygame.sprite.Sprite):
         self.handler = JSONHandler()
 
         self.personality = None
+        self.happiness = None
         self.color = None
         self.parents = [None, None]
 
@@ -31,9 +32,6 @@ class Pudgi(pygame.sprite.Sprite):
             self.import_from_json(load_file)
 
         else:  # create a new pudgi
-
-            self.name = "Pudgi"
-            self.uid = hex(random.randint(0, 100000))
 
             if parents is not None:
                 alpha = parents[0]
@@ -47,8 +45,15 @@ class Pudgi(pygame.sprite.Sprite):
 
             self.handler.load_file(constants.DEFAULT_PUDGI)
             self.json_object = self.handler.get_data()
-            self.json_object["dna"] = self.dna.get_strand()
-            self.json_object["uid"] = self.uid
+
+            self.name = self.json_object["name"]
+            self.happiness = self.json_object["happiness"]
+            self.uid = hex(random.randint(0, 100000))
+
+            # self.json_object["dna"] = self.dna.get_strand()
+            # self.json_object["uid"] = self.uid
+
+
             self.handler.close()
 
         # ------- general data -------
@@ -282,6 +287,7 @@ class Pudgi(pygame.sprite.Sprite):
         self.parents = self.json_object["parents"]
         self.personality = self.json_object["personality"]
         self.color = self.json_object["color"]
+        self.happiness = self.json_object["happiness"]
         strand = self.json_object["dna"]
         self.dna = DNA(strand)
         self.handler.close()
@@ -295,7 +301,10 @@ class Pudgi(pygame.sprite.Sprite):
 
     def export_to_json(self):
         # write information about self to a json file
+        self.json_object["name"] = self.name
+        self.json_object["uid"] = self.uid
         self.json_object["color"] = self.color
+        self.json_object["happiness"] = self.happiness
         self.json_object["personality"] = self.personality
         self.json_object["known_decisions"] = self.known_decisions
         self.json_object["parents"] = self.parents
@@ -309,3 +318,11 @@ class Pudgi(pygame.sprite.Sprite):
         print("Personality: " + self.personality)
         print("Parents: " + str(self.parents))
         return
+
+    def select_parents(self, active_sprite_list):
+        """
+        :param active_sprite_list:
+        :type active_sprite_list: list
+        :return:
+        """
+
