@@ -25,7 +25,6 @@ def main():
 
     pygame.display.set_caption(json_object["name"])
 
-
     parents = ["0x9c08", "0x11e66"]
     # agent = Pudgi(parents)
     # agent = Pudgi(None, "./data/pudgies/0x9c08.json")

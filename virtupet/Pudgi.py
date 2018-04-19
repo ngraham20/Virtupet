@@ -41,20 +41,19 @@ class Pudgi(pygame.sprite.Sprite):
                 self.parents = parents
             else:
                 self.dna = DNA()
-                self.dna.gen_rand()  # todo modify this for proper randomization of genes
+                self.dna.gen_rand()
 
             self.handler.load_file(constants.DEFAULT_PUDGI)
             self.json_object = self.handler.get_data()
 
-            self.name = self.json_object["name"]
             self.happiness = self.json_object["happiness"]
             self.uid = hex(random.randint(0, 100000))
 
-            # self.json_object["dna"] = self.dna.get_strand()
-            # self.json_object["uid"] = self.uid
+        self.handler.close()
 
-
-            self.handler.close()
+        self.handler.load_file("./data/names.json")
+        names = self.handler.get_data()
+        self.name = random.choice(names)
 
         # ------- general data -------
         self.known_decisions = []
@@ -207,10 +206,6 @@ class Pudgi(pygame.sprite.Sprite):
         mental = int((pow(mental, -1)) % 16)
         attribute.append(data["mental"][mental])
 
-        #personality = self.weights["personality"]
-        #personality = int((pow(personality, -1)) % 16)
-        #attribute.append(data["personality"][personality])
-
         most_common = None
         most = 0
         for item in attribute:
@@ -315,6 +310,7 @@ class Pudgi(pygame.sprite.Sprite):
         print("UID: " + str(self.uid))
         print("Name: " + self.name)
         print("Color: " + self.color)
+        print("Happiness: " + str(self.happiness))
         print("Personality: " + self.personality)
         print("Parents: " + str(self.parents))
         return
