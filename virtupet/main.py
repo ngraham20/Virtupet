@@ -5,30 +5,29 @@
 import pygame
 import constants
 import environments
-from file_handler import JSONHandler
 from clock import Clock
 from pudgi import Pudgi
 
 
 def main():
-    handler = JSONHandler()
-    handler.load_file(constants.DEFAULT_PUDGI)
-    json_object = handler.get_data()
-
     time_clock = Clock()
 
     # ----------- pygame objects -----------
     pygame.init()
 
+    pygame.font.init()
+
+    font = pygame.font.SysFont('Comic Sans MS', 30)
+
     size = [constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]
     screen = pygame.display.set_mode(size)
 
-    pygame.display.set_caption(json_object["name"])
+    pygame.display.set_caption("Pudgi Simulation")
 
     parents = ["0x9c08", "0x11e66"]
     # agent = Pudgi(parents)
-    # agent = Pudgi(None, "./data/pudgies/0x9c08.json")
-    agent = Pudgi()
+    agent = Pudgi(None, "./data/pudgies/0x8653.json")
+    # agent = Pudgi()
     env_list = [environments.EnvironmentHouse(agent)]
 
     current_env_no = 0
@@ -56,10 +55,6 @@ def main():
     # --------------Main While loop---------------
     while not done:
 
-        if time_clock.elapsed_time() > time_clock.cur_time:
-            time_clock.update_time()
-            print(time_clock.time_stamp())
-
         for event in pygame.event.get():  # User did something
             if event.type == pygame.QUIT:  # If user clicked close
                 done = True  # Flag that we are done so we exit this loop
@@ -85,9 +80,17 @@ def main():
         current_env.draw(screen)
         active_sprite_list.draw(screen)
 
-        clock.tick(30)
+        time_clock.update_time()
+        clockSurface = font.render(time_clock.time_stamp(), True, constants.BLACK, constants.WHITE)
+        clockRect = clockSurface.get_rect()
+        clockRect.centerx = screen.get_rect().centerx
+        clockRect.y = 2
+        clockBorder = pygame.draw.rect(screen, constants.BLACK, (clockRect.x - 2, clockRect.y - 2, clockRect.width + 4, clockRect.height + 4))
+        screen.blit(clockSurface, clockRect)
 
-        # print(clock.get_fps())
+        screen.blit(clockSurface, clockRect)
+
+        clock.tick(30)
 
         pygame.display.flip()
 

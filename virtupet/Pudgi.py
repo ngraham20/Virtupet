@@ -45,20 +45,20 @@ class Pudgi(pygame.sprite.Sprite):
 
             self.handler.load_file(constants.DEFAULT_PUDGI)
             self.json_object = self.handler.get_data()
-
             self.happiness = self.json_object["happiness"]
             self.uid = hex(random.randint(0, 100000))
 
-        self.handler.close()
+            self.handler.load_file("./data/names.json")
+            names = self.handler.get_data()
+            self.name = random.choice(names)
 
-        self.handler.load_file("./data/names.json")
-        names = self.handler.get_data()
-        self.name = random.choice(names)
+        self.handler.close()
 
         # ------- general data -------
         self.known_decisions = []
         self.known_decisions = self.json_object["known_decisions"]
 
+        # TODO move this so it only happens upon creation of new Pudgi. Load pudgi should grab json attributes
         self.splice_dna()
 
         # ------- animation variables -------
@@ -303,6 +303,7 @@ class Pudgi(pygame.sprite.Sprite):
         self.json_object["personality"] = self.personality
         self.json_object["known_decisions"] = self.known_decisions
         self.json_object["parents"] = self.parents
+        self.json_object["dna"] = self.dna.get_strand()
 
         self.handler.save_as("./data/pudgies/" + self.uid + ".json", self.json_object)
 
