@@ -25,11 +25,16 @@ def main():
 
     pygame.display.set_caption(json_object["name"])
 
-
-    parents = ["0x9c08", "0x11e66"]
+    active_agent_list = []
+    # parents = ["0x9c08", "0x11e66"]
     # agent = Pudgi(parents)
     # agent = Pudgi(None, "./data/pudgies/0x9c08.json")
     agent = Pudgi()
+    agent2 = Pudgi()
+    active_agent_list.append(agent)
+    agent.export_to_json()
+    active_agent_list.append(agent2)
+    agent2.export_to_json()
     env_list = [environments.EnvironmentHouse(agent)]
 
     current_env_no = 0
@@ -40,7 +45,16 @@ def main():
 
     agent.rect.x = 340
     agent.rect.y = constants.SCREEN_HEIGHT - 140
+    agent2.rect.x = 100
+    agent2.rect.y = constants.SCREEN_HEIGHT - 140
+    high_happiness = Pudgi.select_parents(active_agent_list)
+    for parents in high_happiness:
+        pudgi = Pudgi(parents)
+        active_sprite_list.add(pudgi)
+        active_agent_list.append(pudgi)
+
     active_sprite_list.add(agent)
+    active_sprite_list.add(agent2)
 
     done = False
 
@@ -92,7 +106,7 @@ def main():
 
         pygame.display.flip()
 
-    agent.export_to_json()
+    # agent.export_to_json()
     pygame.quit()
 
 

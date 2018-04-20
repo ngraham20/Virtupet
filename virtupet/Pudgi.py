@@ -319,10 +319,21 @@ class Pudgi(pygame.sprite.Sprite):
         print("Parents: " + str(self.parents))
         return
 
-    def select_parents(self, active_sprite_list):
+    @staticmethod
+    def select_parents(active_agent_list):
         """
-        :param active_sprite_list:
-        :type active_sprite_list: list
+        :param active_agent_list:
+        :type active_agent_list: list
         :return:
         """
 
+        high_happiness = []
+        parents = []
+        for pudgi in active_agent_list:
+            if pudgi.happiness > .4:
+                high_happiness.append(pudgi.uid)
+        for i in range(len(high_happiness)):
+            if len(high_happiness) >= 2:
+                parents.append((high_happiness.pop(), high_happiness.pop()))
+
+        return parents
