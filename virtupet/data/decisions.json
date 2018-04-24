@@ -7,9 +7,9 @@
       "confidence": 0.2,
       "contentment": 0.6,
       "entertainment": 1,
-      "vitality": 0.1,
-      "mental_energy": 0.2,
-      "physical_energy": 0.2
+      "vitality": -0.1,
+      "mental_energy": -0.2,
+      "physical_energy": -0.2
       }
     },
     {"name": "push_car", "values":
@@ -20,10 +20,34 @@
       "confidence": 0.3,
       "contentment": 0.6,
       "entertainment": 1,
-      "vitality": 0.1,
-      "mental_energy": 0.2,
-      "physical_energy": 0.2
+      "vitality": -0.1,
+      "mental_energy": -0.2,
+      "physical_energy": -0.2
       }
+    },
+    { "name": "eat_veggies", "values":
+      {"attachment": 0.3,
+      "humor": 0.1,
+      "enjoyment": 0.1,
+      "excitement": 0.1,
+      "confidence": 0.4,
+      "contentment": 0.1,
+      "entertainment": 0.1,
+      "vitality": -0.1,
+      "mental_energy": 0.1,
+      "physical_energy": 0.1}
+    },
+    {"name": "meditate", "values":
+      {"attachment": 0.3,
+      "humor": 0.1,
+      "enjoyment": 0.2,
+      "excitement": 0.1,
+      "confidence": 0.6,
+      "contentment": 0.9,
+      "entertainment": 0.2,
+      "vitality": 0.1,
+      "mental_energy": 0.6,
+      "physical_energy": 0.3}
     }
   ]
 }
