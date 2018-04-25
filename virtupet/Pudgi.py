@@ -334,3 +334,13 @@ class Pudgi(pygame.sprite.Sprite):
                 parents.append((high_happiness.pop(), high_happiness.pop()))
 
         return parents
+
+    def make_decicion(self):
+        self.handler.load_file("./data/decisions.py")
+        decision_file = self.handler.get_data()
+        self.handler.load_file("./data/pudgi" + self.uid + ".json")
+        pudgi_file = self.handler.get_data()
+
+        if (random.random() > 0.5):
+            for decision in self.known_decisions:
+                name = decision["name"]
