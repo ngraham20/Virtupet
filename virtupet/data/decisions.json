@@ -64,6 +64,8 @@
       "vitality": -0.1,
       "mental_energy": -0.5,
       "physical_energy": -0.1
+    }
+  },
     { "name": "eat_veggies", "values":
       {"attachment": 0.3,
       "humor": 0.1,
@@ -88,6 +90,5 @@
       "mental_energy": 0.6,
       "physical_energy": 0.3}
     }
-  }
   ]
 }

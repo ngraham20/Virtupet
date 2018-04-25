@@ -1,6 +1,4 @@
 # This file contains all of the information on the decision heuristics
-import motivations
-import costs
 
 
 # class Decision:
