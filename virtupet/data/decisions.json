@@ -1,4 +1,4 @@
-{"decisions": [
+[
     {"name": "roll_ball", "values":
       {"attachment": 0.2,
       "humor": 0.3,
@@ -32,7 +32,7 @@
       "excitement": 0.9,
       "confidence": 0.1,
       "contentment": 0.7,
-      "entertainment": 0.5,
+      "entertainment": 1,
       "vitality": -0.7,
       "mental_energy": -0.5,
       "physical_energy": 0.3
@@ -87,7 +87,20 @@
       "vitality": 0.1,
       "mental_energy": 0.6,
       "physical_energy": 0.3}
+    },
+  {
+    "name": "nothing",
+    "values": {
+      "attachment": 0.1,
+      "humor": 0.1,
+      "enjoyment": 0.1,
+      "excitement": 0.1,
+      "confidence": 0.1,
+      "contentment": 0.1,
+      "entertainment": 0.5,
+      "vitality": -0.1,
+      "mental_energy": -0.1,
+      "physical_energy": -0.1
     }
   }
-  ]
-}
+]
