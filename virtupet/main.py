@@ -36,10 +36,9 @@ def main():
     agent2.export_to_json()
     pygame.display.set_caption("Pudgi Simulation")
 
-    parents = ["0x9c08", "0x11e66"]
+    # parents = ["0x9c08", "0x11e66"]
     # agent = Pudgi(parents)
-    agent = Pudgi(None, "./data/pudgies/0x8653.json")
-    # agent = Pudgi()
+    # agent = Pudgi(None, "./data/pudgies/0x8653.json")
     env_list = [environments.EnvironmentHouse(agent)]
 
     current_env_no = 0
@@ -73,13 +72,15 @@ def main():
     # for char in number:
     #     node = node[char]
 
+    agent.make_decision()
+
     # --------------Main While loop---------------
     while not done:
 
-        for parents in high_happiness:
-            pudgi = Pudgi(parents)
-            active_sprite_list.add(pudgi)
-            active_agent_list.append(pudgi)
+        # for parents in high_happiness:
+        #     pudgi = Pudgi(parents)
+        #     active_sprite_list.add(pudgi)
+        #     active_agent_list.append(pudgi)
 
         for event in pygame.event.get():  # User did something
             if event.type == pygame.QUIT:  # If user clicked close
