@@ -350,7 +350,7 @@ class Pudgi(pygame.sprite.Sprite):
         w_phy = self.weights["physical"]
         w_ment = self.weights["mental"]
         
-        if random.random() > 1.0:
+        if random.random() > 0.5:
             index = 0
             for decision in self.known_decisions:
                 name = decision["name"]
@@ -430,3 +430,10 @@ class Pudgi(pygame.sprite.Sprite):
                     self.happiness = 10
 
             self.known_decisions[choice_index]["count"] += 1
+
+            print("---------------------------------------------")
+            print("Pudgi: " + self.name)
+            print("Choice: " + choice["name"])
+            print("Happiness increased by: " + str(happiness_optimized))
+            print("Times chosen: " + str(self.known_decisions[choice_index]["count"]))
+            print("---------------------------------------------")

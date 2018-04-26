@@ -61,15 +61,12 @@
       "confidence": 0.3,
       "contentment": 0.7,
       "entertainment": 0.7,
-<<<<<<< HEAD
+      "vitality": 0.1,
+      "mental_energy": 0.5,
+      "physical_energy": 0.1,
       "vitality": 0.1,
       "mental_energy": 0.5,
       "physical_energy": 0.1
-=======
-      "vitality": -0.1,
-      "mental_energy": -0.5,
-      "physical_energy": -0.1
->>>>>>> aaa86423ec248d32b4e27f160d302ae2ae368651
     }
   },
     { "name": "eat_veggies", "values":
@@ -112,5 +109,4 @@
       "physical_energy": 0.1
     }
   }
-  ]
-}
+]

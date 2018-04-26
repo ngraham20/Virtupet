@@ -62,7 +62,7 @@ def main():
 
     done = False
 
-    clock = pygame.time.Clock()
+    game_clock = pygame.time.Clock()
 
     # ----------- JSON objects ------------
     # handler.load_file("./data/metadata.json")
@@ -72,8 +72,7 @@ def main():
     # for char in number:
     #     node = node[char]
 
-    agent.make_decision()
-
+    frames_run = 0
     # --------------Main While loop---------------
     while not done:
 
@@ -117,11 +116,23 @@ def main():
 
         screen.blit(clockSurface, clockRect)
 
-        clock.tick(30)
+        game_clock.tick(30)
+
+        if int(time_clock.get_minutes()) % 15 == 0 and frames_run == 0:
+            for pudgi in active_agent_list:
+                pudgi.make_decision()
+
 
         pygame.display.flip()
 
-    # agent.export_to_json()
+        frames_run += 1
+
+        if frames_run > 30:
+            frames_run = 0
+
+    for pudgi in active_agent_list:
+        pudgi.export_to_json()
+
     pygame.quit()
 
 

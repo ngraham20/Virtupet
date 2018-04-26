@@ -33,3 +33,9 @@ class Clock:
 
     def update_time(self):
         self.cur_time = int(self.elapsed_time())
+
+    def get_minutes(self):
+        return "%02d" % (datetime.datetime.now().second, )
+
+    def get_seconds(self):
+        return "%02d" % (datetime.datetime.now().microsecond, )
