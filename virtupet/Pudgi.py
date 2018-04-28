@@ -323,11 +323,15 @@ class Pudgi(pygame.sprite.Sprite):
         high_happiness = []
         parents = []
         for pudgi in active_agent_list:
-            if pudgi.happiness > .8:
-                high_happiness.append(pudgi.uid)
+            if pudgi.happiness > 9:
+                high_happiness.append(pudgi)
         for i in range(len(high_happiness)):
             if len(high_happiness) >= 2:
-                parents.append((high_happiness.pop(), high_happiness.pop()))
+                parent01 = high_happiness.pop()
+                parent02 = high_happiness.pop()
+                parents.append((parent01.uid, parent02.uid))
+                parent01.happiness = 2.0
+                parent02.happiness = 2.0
 
         return parents
 
@@ -384,9 +388,9 @@ class Pudgi(pygame.sprite.Sprite):
                     if dec["name"] == name:
                         t = dec["count"]
 
-                happiness = pow(ent, t) * ((pow(att, w_att))+(pow(hum, w_hum))+(pow(enj, w_enj)) +
+                happiness = .5 * (pow(ent, t) + ((pow(att, w_att))+(pow(hum, w_hum))+(pow(enj, w_enj)) +
                                          (pow(exc, w_exc)) + (pow(conf, w_conf))+(pow(cont, w_cont)) -
-                                         (pow(vit, w_vit)) - (pow(phy, w_phy)) - (pow(ment, w_ment)))
+                                         (pow(vit, w_vit)) - (pow(phy, w_phy)) - (pow(ment, w_ment))))
 
                 if happiness > happiness_optimized:
                     happiness_optimized = happiness
@@ -413,9 +417,9 @@ class Pudgi(pygame.sprite.Sprite):
                 ment = choice["values"]["mental_energy"]
                 ent = choice["values"]["entertainment"]
 
-                happiness_optimized = pow(ent, t)*((pow(att, w_att)) + (pow(hum, w_hum)) + (pow(enj, w_enj)) +
+                happiness_optimized = .5 * (pow(ent, t)+((pow(att, w_att)) + (pow(hum, w_hum)) + (pow(enj, w_enj)) +
                                                    (pow(exc, w_exc)) + (pow(conf, w_conf)) + (pow(cont, w_cont)) -
-                                                   (pow(vit, w_vit)) - (pow(phy, w_phy)) - (pow(ment, w_ment)))
+                                                   (pow(vit, w_vit)) - (pow(phy, w_phy)) - (pow(ment, w_ment))))
 
                 self.known_decisions.append({"name": choice["name"], "count": 0})
                 choice_index = len(self.known_decisions) - 1
@@ -437,3 +441,4 @@ class Pudgi(pygame.sprite.Sprite):
             print("Happiness increased by: " + str(happiness_optimized))
             print("Times chosen: " + str(self.known_decisions[choice_index]["count"]))
             print("---------------------------------------------")
+            print(str(self.name) + "'s Happiness: " + str(self.happiness))

@@ -7,6 +7,7 @@ import constants
 import environments
 from clock import Clock
 from pudgi import Pudgi
+import random
 
 
 def main():
@@ -22,23 +23,18 @@ def main():
     size = [constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]
     screen = pygame.display.set_mode(size)
 
-    #pygame.display.set_caption(json_object["name"])
-
     active_agent_list = []
-    # parents = ["0x9c08", "0x11e66"]
-    # agent = Pudgi(parents)
-    # agent = Pudgi(None, "./data/pudgies/0x9c08.json")
+
     agent = Pudgi()
     agent2 = Pudgi()
+
     active_agent_list.append(agent)
     agent.export_to_json()
     active_agent_list.append(agent2)
     agent2.export_to_json()
+
     pygame.display.set_caption("Pudgi Simulation")
 
-    # parents = ["0x9c08", "0x11e66"]
-    # agent = Pudgi(parents)
-    # agent = Pudgi(None, "./data/pudgies/0x8653.json")
     env_list = [environments.EnvironmentHouse(agent)]
 
     current_env_no = 0
@@ -51,7 +47,7 @@ def main():
     agent.rect.y = constants.SCREEN_HEIGHT - 140
     agent2.rect.x = 100
     agent2.rect.y = constants.SCREEN_HEIGHT - 140
-    high_happiness = Pudgi.select_parents(active_agent_list)
+
     # for parents in high_happiness:
     #     pudgi = Pudgi(parents)
     #     active_sprite_list.add(pudgi)
@@ -76,10 +72,15 @@ def main():
     # --------------Main While loop---------------
     while not done:
 
-        # for parents in high_happiness:
-        #     pudgi = Pudgi(parents)
-        #     active_sprite_list.add(pudgi)
-        #     active_agent_list.append(pudgi)
+        high_happiness = Pudgi.select_parents(active_agent_list)
+
+        for parents in high_happiness:
+            pudgi = Pudgi(parents)
+            active_sprite_list.add(pudgi)
+            active_agent_list.append(pudgi)
+            pudgi.export_to_json()
+            pudgi.rect.y = constants.SCREEN_HEIGHT - 140
+            pudgi.rect.x = random.randint(100, 800)
 
         for event in pygame.event.get():  # User did something
             if event.type == pygame.QUIT:  # If user clicked close
@@ -121,6 +122,7 @@ def main():
         if int(time_clock.get_minutes()) % 15 == 0 and frames_run == 0:
             for pudgi in active_agent_list:
                 pudgi.make_decision()
+                # print(str(pudgi.name) + "'s Happiness: " + str(pudgi.happiness))
 
 
         pygame.display.flip()
