@@ -442,3 +442,12 @@ class Pudgi(pygame.sprite.Sprite):
             print("Times chosen: " + str(self.known_decisions[choice_index]["count"]))
             print("---------------------------------------------")
             print(str(self.name) + "'s Happiness: " + str(self.happiness))
+
+    def movement(self, direction):
+        if direction == "L" and self.rect.x > 0:
+            self.go_left()
+        elif direction == "R" and self.rect.x < 760:
+            self.go_right()
+        else:
+            self.stop()
+

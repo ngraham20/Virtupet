@@ -21,7 +21,7 @@ def main():
     font = pygame.font.SysFont('Comic Sans MS', 30)
 
     size = [constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]
-    screen = pygame.display.set_mode(size, pygame.FULLSCREEN)
+    screen = pygame.display.set_mode(size)
 
     active_agent_list = []
 
@@ -69,6 +69,13 @@ def main():
     #     node = node[char]
 
     frames_run = 0
+    movement = {}
+    movement_time = 0
+    movement_direction = ""
+
+    movement[agent.name] = {"time": movement_time, "direction": movement_direction}
+    movement[agent2.name] = {"time": movement_time, "direction": movement_direction}
+
     # --------------Main While loop---------------
     while not done:
 
@@ -81,24 +88,34 @@ def main():
             pudgi.export_to_json()
             pudgi.rect.y = constants.SCREEN_HEIGHT - 140
             pudgi.rect.x = random.randint(100, 800)
+            movement[pudgi.name] = {"time": movement_time, "direction": movement_direction}
 
         for event in pygame.event.get():  # User did something
             if event.type == pygame.QUIT:  # If user clicked close
                 done = True  # Flag that we are done so we exit this loop
 
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    agent.go_left()
-                if event.key == pygame.K_RIGHT:
-                    agent.go_right()
-                # if event.key == pygame.K_UP:
-                #     agent.jump()
 
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT and agent.change_x < 0:
-                    agent.stop()
-                if event.key == pygame.K_RIGHT and agent.change_x > 0:
-                    agent.stop()
+            # if event.type == pygame.KEYDOWN:
+            #     if event.key == pygame.K_LEFT:
+            #         agent.go_left()
+            #     if event.key == pygame.K_RIGHT:
+            #         agent.go_right()
+            #     # if event.key == pygame.K_UP:
+            #     #     agent.jump()
+            #
+            # if event.type == pygame.KEYUP:
+            #     if event.key == pygame.K_LEFT and agent.change_x < 0:
+            #         agent.stop()
+            #     if event.key == pygame.K_RIGHT and agent.change_x > 0:
+            #         agent.stop()
+
+        for pudgi in active_agent_list:
+            if movement[pudgi.name]["time"] <= 0:
+                movement[pudgi.name]["time"] = random.randint(30, 90)
+                movement[pudgi.name]["direction"] = random.choice(["L", "R", ""])
+
+            movement[pudgi.name]["time"] -= 1
+            pudgi.movement(movement[pudgi.name]["direction"])
 
         active_sprite_list.update()
 
