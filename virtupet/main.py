@@ -21,7 +21,7 @@ def main():
     font = pygame.font.SysFont('Comic Sans MS', 30)
 
     size = [constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]
-    screen = pygame.display.set_mode(size)
+    screen = pygame.display.set_mode(size, pygame.FULLSCREEN)
 
     active_agent_list = []
 
