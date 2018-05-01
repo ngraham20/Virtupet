@@ -336,7 +336,7 @@ class Pudgi(pygame.sprite.Sprite):
         return parents
 
     def make_decicion(self):
-        self.handler.load_file("./data/decisions.py")
+        self.handler.load_file("./data/decisions.json")
         decision_file = self.handler.get_data()
         self.handler.load_file("./data/pudgi" + self.uid + ".json")
         pudgi_file = self.handler.get_data()
