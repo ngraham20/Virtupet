@@ -76,6 +76,6 @@
     "color": null,
     "personality": null,
     "parents": [null, null],
-    "happiness": 0.5,
-    "known_decisions": []
+    "happiness": 3.0,
+    "known_decisions": [{"name": "nothing", "count": 0}]
 }
