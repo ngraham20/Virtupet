@@ -27,6 +27,7 @@ class Pudgi(pygame.sprite.Sprite):
         self.happiness = None
         self.color = None
         self.parents = [None, None]
+        self.vitality = None
 
         if load_file is not None:  # load should be a filename
             self.import_from_json(load_file)
@@ -47,6 +48,8 @@ class Pudgi(pygame.sprite.Sprite):
             self.json_object = self.handler.get_data()
             self.happiness = self.json_object["happiness"]
             self.uid = hex(random.randint(0, 100000))
+            self.vitality = self.json_object["vitality"]
+            self.sleeping = self.json_object["sleeping"]
 
             self.handler.load_file("./data/names.json")
             names = self.handler.get_data()
@@ -331,7 +334,9 @@ class Pudgi(pygame.sprite.Sprite):
                 parent02 = high_happiness.pop()
                 parents.append((parent01.uid, parent02.uid))
                 parent01.happiness = 2.0
+                parent01.vitality -= 4
                 parent02.happiness = 2.0
+                parent02.vitality -= 4
 
         return parents
 
@@ -353,95 +358,135 @@ class Pudgi(pygame.sprite.Sprite):
         w_vit = self.weights["vitality"]
         w_phy = self.weights["physical"]
         w_ment = self.weights["mental"]
-        
-        if random.random() > 0.5:
-            index = 0
-            for decision in self.known_decisions:
-                name = decision["name"]
-                
-                att = None
-                hum = None
-                enj = None
-                exc = None
-                conf = None
-                cont = None
-                vit = None
-                phy = None
-                ment = None
-                ent = None
-                
-                for dec in decision_file:
-                    if dec["name"] == name:
-                
-                        att = dec["values"]["attachment"]
-                        hum = dec["values"]["humor"]
-                        enj = dec["values"]["enjoyment"]
-                        exc = dec["values"]["excitement"]
-                        conf = dec["values"]["confidence"]
-                        cont = dec["values"]["contentment"]
-                        vit = dec["values"]["vitality"]
-                        phy = dec["values"]["physical_energy"]
-                        ment = dec["values"]["mental_energy"]
-                        ent = dec["values"]["entertainment"]
 
-                for dec in self.known_decisions:
-                    if dec["name"] == name:
-                        t = dec["count"]
+        vitality = self.vitality
+        chance_waking = -1
+        chance_sleeping = -1
+        # check vitality for sleepiness (using fuzzy logic)
+        if vitality <= 2:
+            chance_waking = 0
+            chance_sleeping = 1
+        elif 2 < vitality < 9:
+            if self.sleeping:
+                chance_waking = ((vitality-2)/7)
+                chance_sleeping = ((9 - vitality) / 7)
+            else:
+                chance_waking = 1
+                chance_sleeping = 0
 
-                happiness = .5 * (pow(ent, t) + ((pow(att, w_att))+(pow(hum, w_hum))+(pow(enj, w_enj)) +
-                                         (pow(exc, w_exc)) + (pow(conf, w_conf))+(pow(cont, w_cont)) -
-                                         (pow(vit, w_vit)) - (pow(phy, w_phy)) - (pow(ment, w_ment))))
-
-                if happiness > happiness_optimized:
-                    happiness_optimized = happiness
-                    choice = decision
-                    choice_index = index
-
-                index += 1
-
+        if self.sleeping:
+            if random.random() <= chance_waking:
+                self.sleeping = False
         else:
-            dec_attempt = random.choice(decision_file)
-            for known in self.known_decisions:  # iterate through all known
-                    if dec_attempt["name"] == known["name"]:  # if we find a match, break out. We don't want this
-                        break
+            if random.random() <= chance_sleeping:
+                self.sleeping = True  # the pudgi fell asleep
+
+        if not self.sleeping:
+
+            if random.random() > 0.5:
+                index = 0
+                for decision in self.known_decisions:
+                    name = decision["name"]
+
+                    att = None
+                    hum = None
+                    enj = None
+                    exc = None
+                    conf = None
+                    cont = None
+                    vit = None
+                    phy = None
+                    ment = None
+                    ent = None
+
+                    for dec in decision_file:
+                        if dec["name"] == name:
+
+                            att = dec["values"]["attachment"]
+                            hum = dec["values"]["humor"]
+                            enj = dec["values"]["enjoyment"]
+                            exc = dec["values"]["excitement"]
+                            conf = dec["values"]["confidence"]
+                            cont = dec["values"]["contentment"]
+                            vit = dec["values"]["vitality"]
+                            phy = dec["values"]["physical_energy"]
+                            ment = dec["values"]["mental_energy"]
+                            ent = dec["values"]["entertainment"]
+
+                    for dec in self.known_decisions:
+                        if dec["name"] == name:
+                            t = dec["count"]
+
+                    happiness = .5 * (pow(ent, t) + ((pow(att, w_att))+(pow(hum, w_hum))+(pow(enj, w_enj)) +
+                                             (pow(exc, w_exc)) + (pow(conf, w_conf))+(pow(cont, w_cont)) -
+                                             (pow(vit, w_vit)) - (pow(phy, w_phy)) - (pow(ment, w_ment))))
+
+                    if happiness > happiness_optimized:
+                        happiness_optimized = happiness
+                        choice = decision
+                        choice_index = index
+
+                    self.vitality -= vit
+                    index += 1
+
             else:
-                choice = dec_attempt
-                att = choice["values"]["attachment"]
-                hum = choice["values"]["humor"]
-                enj = choice["values"]["enjoyment"]
-                exc = choice["values"]["excitement"]
-                conf = choice["values"]["confidence"]
-                cont = choice["values"]["contentment"]
-                vit = choice["values"]["vitality"]
-                phy = choice["values"]["physical_energy"]
-                ment = choice["values"]["mental_energy"]
-                ent = choice["values"]["entertainment"]
-
-                happiness_optimized = .5 * (pow(ent, t)+((pow(att, w_att)) + (pow(hum, w_hum)) + (pow(enj, w_enj)) +
-                                                   (pow(exc, w_exc)) + (pow(conf, w_conf)) + (pow(cont, w_cont)) -
-                                                   (pow(vit, w_vit)) - (pow(phy, w_phy)) - (pow(ment, w_ment))))
-
-                self.known_decisions.append({"name": choice["name"], "count": 0})
-                choice_index = len(self.known_decisions) - 1
-
-        if choice is not None:
-            if self.happiness + happiness_optimized <= 0:
-                self.happiness = 0
-            else:
-                if self.happiness + happiness_optimized <= 10:
-                    self.happiness += happiness_optimized
+                dec_attempt = random.choice(decision_file)
+                for known in self.known_decisions:  # iterate through all known
+                        if dec_attempt["name"] == known["name"]:  # if we find a match, break out. We don't want this
+                            break
                 else:
-                    self.happiness = 10
+                    choice = dec_attempt
+                    att = choice["values"]["attachment"]
+                    hum = choice["values"]["humor"]
+                    enj = choice["values"]["enjoyment"]
+                    exc = choice["values"]["excitement"]
+                    conf = choice["values"]["confidence"]
+                    cont = choice["values"]["contentment"]
+                    vit = choice["values"]["vitality"]
+                    phy = choice["values"]["physical_energy"]
+                    ment = choice["values"]["mental_energy"]
+                    ent = choice["values"]["entertainment"]
 
-            self.known_decisions[choice_index]["count"] += 1
+                    happiness_optimized = .5 * (pow(ent, t)+((pow(att, w_att)) + (pow(hum, w_hum)) + (pow(enj, w_enj)) +
+                                                       (pow(exc, w_exc)) + (pow(conf, w_conf)) + (pow(cont, w_cont)) -
+                                                       (pow(vit, w_vit)) - (pow(phy, w_phy)) - (pow(ment, w_ment))))
 
+                    self.known_decisions.append({"name": choice["name"], "count": 0})
+                    choice_index = len(self.known_decisions) - 1
+                    self.vitality -= vit
+
+            if choice is not None:
+                if self.happiness + happiness_optimized <= 0:
+                    self.happiness = 0
+                else:
+                    if self.happiness + happiness_optimized <= 10:
+                        self.happiness += happiness_optimized
+                    else:
+                        self.happiness = 10
+
+                self.known_decisions[choice_index]["count"] += 1
+
+                print()
+                print("---------------------------------------------")
+                print("Pudgi: " + self.name)
+                print("Choice: " + choice["name"])
+                print("Happiness increased by: " + str(happiness_optimized))
+                print("Times chosen: " + str(self.known_decisions[choice_index]["count"]))
+                print("---------------------------------------------")
+                print(str(self.name) + "'s Happiness: " + str(self.happiness))
+                print(str(self.name) + "'s Vitality: " + str(self.vitality))
+
+        else:  # the pudgi is sleeping
+            self.vitality += 0.8
+
+            print()
             print("---------------------------------------------")
             print("Pudgi: " + self.name)
-            print("Choice: " + choice["name"])
-            print("Happiness increased by: " + str(happiness_optimized))
-            print("Times chosen: " + str(self.known_decisions[choice_index]["count"]))
+            print("Choice: Sleep")
+            print("Vitality increased by: 0.8")
             print("---------------------------------------------")
             print(str(self.name) + "'s Happiness: " + str(self.happiness))
+            print(str(self.name) + "'s Vitality: " + str(self.vitality))
 
     def movement(self, direction):
         if direction == "L" and self.rect.x > 0:

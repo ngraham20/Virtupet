@@ -11,6 +11,9 @@ import random
 
 
 def main():
+
+    death_count = 0
+
     time_clock = Clock()
 
     # ----------- pygame objects -----------
@@ -136,11 +139,14 @@ def main():
 
         game_clock.tick(30)
 
-        if int(time_clock.get_minutes()) % 15 == 0 and frames_run == 0:
+        if frames_run == 0:
             for pudgi in active_agent_list:
-                pudgi.make_decision()
-                # print(str(pudgi.name) + "'s Happiness: " + str(pudgi.happiness))
-
+                if pudgi.vitality <= 0:
+                    active_agent_list.remove(pudgi)
+                    active_sprite_list.remove(pudgi)
+                    death_count += 1
+                if int(time_clock.get_minutes()) % 15 == 0:
+                    pudgi.make_decision()
 
         pygame.display.flip()
 

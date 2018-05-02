@@ -38,21 +38,7 @@
       "physical_energy": 0.3
       }
      },
-     {"name": "sleep", "values":
-      {"attachment": 0.1,
-      "humor": 0.1,
-      "enjoyment": 0.1,
-      "excitement": 0.1,
-      "confidence": 0.1,
-      "contentment": 0.1,
-      "entertainment": 0.1,
-      "vitality": 0.8,
-      "mental_energy": 0.5,
-      "physical_energy": 0.5
-      }
-    },
-  {
-    "name": "reading",
+  {"name": "reading",
     "values":
     {"attachment": 0.1,
       "humor": 0.5,
@@ -61,9 +47,6 @@
       "confidence": 0.3,
       "contentment": 0.7,
       "entertainment": 0.7,
-      "vitality": 0.1,
-      "mental_energy": 0.5,
-      "physical_energy": 0.1,
       "vitality": 0.1,
       "mental_energy": 0.5,
       "physical_energy": 0.1
