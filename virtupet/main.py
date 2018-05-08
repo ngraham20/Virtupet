@@ -113,9 +113,20 @@ def main():
             #         agent.stop()
 
         for pudgi in active_agent_list:
-            if movement[pudgi.name]["time"] <= 0:
-                movement[pudgi.name]["time"] = random.randint(30, 90)
-                movement[pudgi.name]["direction"] = random.choice(["L", "R", ""])
+            #if not pudgi.sleeping:
+            #    if movement[pudgi.name]["time"] <= 0:
+            #        movement[pudgi.name]["time"] = random.randint(30, 90)
+            #        movement[pudgi.name]["direction"] = random.choice(["L", "R", ""])
+            #else:  # pudgi is sleeping
+            #    movement[pudgi.name]["direction"] = "S"
+
+            if pudgi.sleeping:
+                movement[pudgi.name]["direction"] = "S"
+                pudgi.direction = "S"
+            else:
+                if movement[pudgi.name]["time"] <= 0:
+                    movement[pudgi.name]["time"] = random.randint(30, 90)
+                    movement[pudgi.name]["direction"] = random.choice(["L", "R", ""])
 
             movement[pudgi.name]["time"] -= 1
             pudgi.movement(movement[pudgi.name]["direction"])
@@ -145,6 +156,7 @@ def main():
                     active_agent_list.remove(pudgi)
                     active_sprite_list.remove(pudgi)
                     death_count += 1
+                    print("Death Count: " + str(death_count))
                 if int(time_clock.get_minutes()) % 15 == 0:
                     pudgi.make_decision()
 

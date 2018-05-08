@@ -20,6 +20,7 @@ class Pudgi(pygame.sprite.Sprite):
         self.weights = {}
         self.sprite_sheet_l = None
         self.sprite_sheet_r = None
+        self.sprite_sheet_s = None
 
         self.handler = JSONHandler()
 
@@ -70,6 +71,9 @@ class Pudgi(pygame.sprite.Sprite):
 
         self.walking_frames_l = []
         self.walking_frames_r = []
+        self.walking_frames_s = []
+        # load z's animation
+        self.walking_frames_z = []
 
         self.current_frame = 0
         self.len_animation = None
@@ -152,6 +156,7 @@ class Pudgi(pygame.sprite.Sprite):
         # set sprite sheets from dna
         self.sprite_sheet_l = SpriteSheet(node["L"])
         self.sprite_sheet_r = SpriteSheet(node["R"])
+        self.sprite_sheet_s = SpriteSheet(node["S"])
 
         # set color from dna
         self.color = node["Color"]
@@ -248,6 +253,19 @@ class Pudgi(pygame.sprite.Sprite):
                     image = self.sprite_sheet_l.get_image(x, y, 138, 114)
                     self.walking_frames_l.append(image)
 
+        # load sleeping animation
+        sprite_count = 0
+        for y in range(0, 828):
+            if sprite_count == 60:
+                break
+            for x in range(0, 912):
+                if x % 138 == 0 and y % 114 == 0:
+                    if sprite_count == 60:
+                        break
+                    sprite_count += 1
+                    image = self.sprite_sheet_s.get_image(x, y, 138, 114)
+                    self.walking_frames_s.append(image)
+
         self.len_animation = sprite_count
 
     def update(self):
@@ -255,8 +273,10 @@ class Pudgi(pygame.sprite.Sprite):
 
         if self.direction == "R":
             self.image = self.walking_frames_r[self.current_frame]
-        else:
+        elif self.direction == "L":
             self.image = self.walking_frames_l[self.current_frame]
+        elif self.direction == "S":
+            self.image = self.walking_frames_s[self.current_frame]
         self.current_frame += 1
 
         if self.current_frame >= self.len_animation:
