@@ -117,7 +117,6 @@ def main():
                 print()
                 print("<<<---" + pudgi.name + " died of old age--->>>")
                 print("Death Count: " + str(death_count))
-                print()
 
                 # print(colored(pudgi.name + " died of old age", "red"))
             if pudgi.sleeping:
@@ -166,7 +165,7 @@ def main():
                     print()
                     print("<<<---" + pudgi.name + " died in childbirth--->>>")
                     print("Death Count: " + str(death_count))
-                    print()
+
                     # print(colored(pudgi.name + " died in childbirth", "red"))
                 if int(time_clock.get_minutes()) % 15 == 0:
                     pudgi.make_decision()

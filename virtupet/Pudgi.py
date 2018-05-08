@@ -337,6 +337,7 @@ class Pudgi(pygame.sprite.Sprite):
 
         self.handler.save_as("./data/pudgies/" + self.uid + ".json", self.json_object)
 
+        print()
         print("---Exporting Pudgi---")
         print("UID: " + str(self.uid))
         print("Name: " + self.name)
