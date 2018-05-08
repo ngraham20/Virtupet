@@ -12,6 +12,8 @@ import random
 
 def main():
 
+    print("-Initializing Simulation-")
+
     death_count = 0
 
     time_clock = Clock()
@@ -88,6 +90,10 @@ def main():
             pudgi = Pudgi(parents)
             active_sprite_list.add(pudgi)
             active_agent_list.append(pudgi)
+            print()
+            print("<<<---It's the miracle of life!--->>>")
+            print(pudgi.name + " was just born into the world!")
+            print()
             pudgi.export_to_json()
             pudgi.rect.y = constants.SCREEN_HEIGHT - 140
             pudgi.rect.x = random.randint(100, 800)
@@ -97,20 +103,10 @@ def main():
             if event.type == pygame.QUIT:  # If user clicked close
                 done = True  # Flag that we are done so we exit this loop
 
-
-            # if event.type == pygame.KEYDOWN:
-            #     if event.key == pygame.K_LEFT:
-            #         agent.go_left()
-            #     if event.key == pygame.K_RIGHT:
-            #         agent.go_right()
-            #     # if event.key == pygame.K_UP:
-            #     #     agent.jump()
-            #
-            # if event.type == pygame.KEYUP:
-            #     if event.key == pygame.K_LEFT and agent.change_x < 0:
-            #         agent.stop()
-            #     if event.key == pygame.K_RIGHT and agent.change_x > 0:
-            #         agent.stop()
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LCTRL]:
+            if keys[pygame.K_q]:
+                done = True
 
         for pudgi in active_agent_list:
             if pudgi.age >= pudgi.lifespan:
@@ -118,10 +114,12 @@ def main():
                 active_sprite_list.remove(pudgi)
                 death_count += 1
 
-                print("---------------------------------------------")
+                print()
                 print("<<<---" + pudgi.name + " died of old age--->>>")
                 print("Death Count: " + str(death_count))
-                print("---------------------------------------------")
+                print()
+
+                # print(colored(pudgi.name + " died of old age", "red"))
             if pudgi.sleeping:
                 movement[pudgi.name]["direction"] = "S"
                 pudgi.direction = "S"
@@ -164,10 +162,12 @@ def main():
                     active_agent_list.remove(pudgi)
                     active_sprite_list.remove(pudgi)
                     death_count += 1
-                    print("---------------------------------------------")
+
+                    print()
                     print("<<<---" + pudgi.name + " died in childbirth--->>>")
                     print("Death Count: " + str(death_count))
-                    print("---------------------------------------------")
+                    print()
+                    # print(colored(pudgi.name + " died in childbirth", "red"))
                 if int(time_clock.get_minutes()) % 15 == 0:
                     pudgi.make_decision()
 
