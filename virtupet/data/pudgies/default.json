@@ -74,6 +74,8 @@
         1
     ],
     "color": null,
+    "age": 0,
+    "lifespan": null,
     "personality": null,
     "parents": [null, null],
     "happiness": 3.0,

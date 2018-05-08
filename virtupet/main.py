@@ -113,13 +113,15 @@ def main():
             #         agent.stop()
 
         for pudgi in active_agent_list:
-            #if not pudgi.sleeping:
-            #    if movement[pudgi.name]["time"] <= 0:
-            #        movement[pudgi.name]["time"] = random.randint(30, 90)
-            #        movement[pudgi.name]["direction"] = random.choice(["L", "R", ""])
-            #else:  # pudgi is sleeping
-            #    movement[pudgi.name]["direction"] = "S"
+            if pudgi.age >= pudgi.lifespan:
+                active_agent_list.remove(pudgi)
+                active_sprite_list.remove(pudgi)
+                death_count += 1
 
+                print("---------------------------------------------")
+                print("<<<---" + pudgi.name + " died of old age--->>>")
+                print("Death Count: " + str(death_count))
+                print("---------------------------------------------")
             if pudgi.sleeping:
                 movement[pudgi.name]["direction"] = "S"
                 pudgi.direction = "S"
@@ -141,12 +143,18 @@ def main():
         time_clock.update_time()
         clockSurface = font.render(time_clock.time_stamp(), True, constants.BLACK, constants.WHITE)
         clockRect = clockSurface.get_rect()
-        clockRect.centerx = screen.get_rect().centerx
+        clockRect.x = screen.get_rect().centerx - 120
         clockRect.y = 2
         clockBorder = pygame.draw.rect(screen, constants.BLACK, (clockRect.x - 2, clockRect.y - 2, clockRect.width + 4, clockRect.height + 4))
         screen.blit(clockSurface, clockRect)
 
-        screen.blit(clockSurface, clockRect)
+        deathCountSurface = font.render("Deaths: " + str(death_count), True, constants.BLACK, constants.WHITE)
+        deathCountRect = deathCountSurface.get_rect()
+        deathCountRect.x = clockRect.x + 120
+        deathCountRect.y = 2
+        deathCountBorder = pygame.draw.rect(screen, constants.BLACK,
+                                       (deathCountRect.x - 2, deathCountRect.y - 2, deathCountRect.width + 4, deathCountRect.height + 4))
+        screen.blit(deathCountSurface, deathCountRect)
 
         game_clock.tick(30)
 
@@ -156,7 +164,10 @@ def main():
                     active_agent_list.remove(pudgi)
                     active_sprite_list.remove(pudgi)
                     death_count += 1
+                    print("---------------------------------------------")
+                    print("<<<---" + pudgi.name + " died in childbirth--->>>")
                     print("Death Count: " + str(death_count))
+                    print("---------------------------------------------")
                 if int(time_clock.get_minutes()) % 15 == 0:
                     pudgi.make_decision()
 

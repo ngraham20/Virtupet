@@ -38,9 +38,16 @@ class Pudgi(pygame.sprite.Sprite):
             if parents is not None:
                 alpha = parents[0]
                 beta = parents[1]
-                self.dna = Pudgi.generate_dna_from(alpha, beta)
+
+                handler = JSONHandler()
+                handler.load_file("./data/pudgies/" + alpha + ".json")
+                alpha_json = handler.get_data()
+                handler.load_file("./data/pudgies/" + beta + ".json")
+                beta_json = handler.get_data()
+
+                self.dna = Pudgi.generate_dna_from(alpha_json, beta_json)
                 Pudgi.mutate_dna_strand(self.dna.get_strand())
-                self.parents = parents
+                self.parents = [alpha_json["name"], beta_json["name"]]
             else:
                 self.dna = DNA()
                 self.dna.gen_rand()
@@ -59,8 +66,9 @@ class Pudgi(pygame.sprite.Sprite):
         self.handler.close()
 
         # ------- general data -------
-        self.known_decisions = []
         self.known_decisions = self.json_object["known_decisions"]
+        self.age = self.json_object["age"]
+        self.lifespan = random.randint(540, 660)  # approximately 10 minute irl lifespan
 
         # TODO move this so it only happens upon creation of new Pudgi. Load pudgi should grab json attributes
         self.splice_dna()
@@ -90,14 +98,17 @@ class Pudgi(pygame.sprite.Sprite):
 
     @staticmethod
     def generate_dna_from(alpha, beta):
-        handler = JSONHandler()
-        handler.load_file("./data/pudgies/" + alpha + ".json")
-        alpha_json = handler.get_data()
-        handler.load_file("./data/pudgies/" + beta + ".json")
-        beta_json = handler.get_data()
+        # handler = JSONHandler()
+        # handler.load_file("./data/pudgies/" + alpha + ".json")
+        # alpha_json = handler.get_data()
+        # handler.load_file("./data/pudgies/" + beta + ".json")
+        # beta_json = handler.get_data()
+        #
+        # alpha_dna = DNA(alpha_json["dna"])
+        # beta_dna = DNA(beta_json["dna"])
 
-        alpha_dna = DNA(alpha_json["dna"])
-        beta_dna = DNA(beta_json["dna"])
+        alpha_dna = DNA(alpha["dna"])
+        beta_dna = DNA(beta["dna"])
 
         strand = DNA.combine_dna(alpha_dna, beta_dna)
         return DNA(strand)
