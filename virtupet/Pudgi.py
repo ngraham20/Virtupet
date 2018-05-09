@@ -3,6 +3,7 @@
 import pygame
 import random
 import constants
+import logger
 from file_handler import JSONHandler
 from spritesheet_functions import SpriteSheet
 from dna import DNA
@@ -317,12 +318,12 @@ class Pudgi(pygame.sprite.Sprite):
         self.dna = DNA(strand)
         self.handler.close()
 
-        print("---Importing Pudgi---")
-        print("UID: " + str(self.uid))
-        print("Name: " + self.name)
-        print("Color: " + self.color)
-        print("Personality: " + self.personality)
-        print("Parents: " + str(self.parents))
+        logger.logging.info("---Importing Pudgi---")
+        logger.logging.info("UID: " + str(self.uid))
+        logger.logging.info("Name: " + self.name)
+        logger.logging.info("Color: " + self.color)
+        logger.logging.info("Personality: " + self.personality)
+        logger.logging.info("Parents: " + str(self.parents))
 
     def export_to_json(self):
         # write information about self to a json file
@@ -337,14 +338,14 @@ class Pudgi(pygame.sprite.Sprite):
 
         self.handler.save_as("./data/pudgies/" + self.uid + ".json", self.json_object)
 
-        print()
-        print("---Exporting Pudgi---")
-        print("UID: " + str(self.uid))
-        print("Name: " + self.name)
-        print("Color: " + self.color)
-        print("Happiness: " + str(self.happiness))
-        print("Personality: " + self.personality)
-        print("Parents: " + str(self.parents))
+        logger.logging.info("")
+        logger.logging.info("---Exporting Pudgi---")
+        logger.logging.info("UID: " + str(self.uid))
+        logger.logging.info("Name: " + self.name)
+        logger.logging.info("Color: " + self.color)
+        logger.logging.info("Happiness: " + str(self.happiness))
+        logger.logging.info("Personality: " + self.personality)
+        logger.logging.info("Parents: " + str(self.parents))
         return
 
     @staticmethod
@@ -395,16 +396,17 @@ class Pudgi(pygame.sprite.Sprite):
         chance_waking = -1
         chance_sleeping = -1
         # check vitality for sleepiness (using fuzzy logic)
-        if vitality <= 2:
+        low = 2.5
+        high = 9
+        if vitality <= low:
             chance_waking = 0
             chance_sleeping = 1
-        elif 2 < vitality < 9:
-            if self.sleeping:
-                chance_waking = ((vitality-2)/7)
-                chance_sleeping = ((9 - vitality) / 7)
-            else:
-                chance_waking = 1
-                chance_sleeping = 0
+        elif low < vitality < high:
+            chance_waking = ((vitality-low)/high-low)
+            chance_sleeping = ((high - vitality) / high-low)
+        else:
+            chance_waking = 1
+            chance_sleeping = 0
 
         if self.sleeping:
             if random.random() <= chance_waking:
@@ -498,27 +500,27 @@ class Pudgi(pygame.sprite.Sprite):
 
                 self.known_decisions[choice_index]["count"] += 1
 
-                print()
-                print("---------------------------------------------")
-                print("Pudgi: " + self.name)
-                print("Choice: " + choice["name"])
-                print("Happiness increased by: " + str(happiness_optimized))
-                print("Times chosen: " + str(self.known_decisions[choice_index]["count"]))
-                print("---------------------------------------------")
-                print(str(self.name) + "'s Happiness: " + str(self.happiness))
-                print(str(self.name) + "'s Vitality: " + str(self.vitality))
+                logger.logging.info("")
+                logger.logging.info("---------------------------------------------")
+                logger.logging.info("Pudgi: " + self.name)
+                logger.logging.info("Choice: " + choice["name"])
+                logger.logging.info("Happiness increased by: " + str(happiness_optimized))
+                logger.logging.info("Times chosen: " + str(self.known_decisions[choice_index]["count"]))
+                logger.logging.info("---------------------------------------------")
+                logger.logging.info(str(self.name) + "'s Happiness: " + str(self.happiness))
+                logger.logging.info(str(self.name) + "'s Vitality: " + str(self.vitality))
 
         else:  # the pudgi is sleeping
             self.vitality += 0.8
 
-            print()
-            print("---------------------------------------------")
-            print("Pudgi: " + self.name)
-            print("Choice: Sleep")
-            print("Vitality increased by: 0.8")
-            print("---------------------------------------------")
-            print(str(self.name) + "'s Happiness: " + str(self.happiness))
-            print(str(self.name) + "'s Vitality: " + str(self.vitality))
+            logger.logging.info("")
+            logger.logging.info("---------------------------------------------")
+            logger.logging.info("Pudgi: " + self.name)
+            logger.logging.info("Choice: Sleep")
+            logger.logging.info("Vitality increased by: 0.8")
+            logger.logging.info("---------------------------------------------")
+            logger.logging.info(str(self.name) + "'s Happiness: " + str(self.happiness))
+            logger.logging.info(str(self.name) + "'s Vitality: " + str(self.vitality))
 
     def movement(self, direction):
         if direction == "L" and self.rect.x > 0:

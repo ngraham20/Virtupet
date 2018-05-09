@@ -5,6 +5,7 @@
 import pygame
 import constants
 import environments
+import logger
 from clock import Clock
 from pudgi import Pudgi
 import random
@@ -12,7 +13,7 @@ import random
 
 def main():
 
-    print("-Initializing Simulation-")
+    logger.logging.info("-Initializing Simulation-")
 
     death_count = 0
 
@@ -90,10 +91,10 @@ def main():
             pudgi = Pudgi(parents)
             active_sprite_list.add(pudgi)
             active_agent_list.append(pudgi)
-            print()
-            print("<<<---It's the miracle of life!--->>>")
-            print(pudgi.name + " was just born into the world!")
-            print()
+            logger.logging.info("")
+            logger.logging.info("<<<---It's the miracle of life!--->>>")
+            logger.logging.info(pudgi.name + " was just born into the world!")
+            logger.logging.info("")
             pudgi.export_to_json()
             pudgi.rect.y = constants.SCREEN_HEIGHT - 140
             pudgi.rect.x = random.randint(100, 800)
@@ -114,11 +115,11 @@ def main():
                 active_sprite_list.remove(pudgi)
                 death_count += 1
 
-                print()
-                print("<<<---" + pudgi.name + " died of old age--->>>")
-                print("Death Count: " + str(death_count))
+                logger.logging.info("")
+                logger.logging.info("<<<---" + pudgi.name + " died of old age--->>>")
+                logger.logging.info("Death Count: " + str(death_count))
 
-                # print(colored(pudgi.name + " died of old age", "red"))
+                # logger.logging.info(colored(pudgi.name + " died of old age", "red"))
             if pudgi.sleeping:
                 movement[pudgi.name]["direction"] = "S"
                 pudgi.direction = "S"
@@ -162,11 +163,11 @@ def main():
                     active_sprite_list.remove(pudgi)
                     death_count += 1
 
-                    print()
-                    print("<<<---" + pudgi.name + " died in childbirth--->>>")
-                    print("Death Count: " + str(death_count))
+                    logger.logging.info("")
+                    logger.logging.info("<<<---" + pudgi.name + " died in childbirth--->>>")
+                    logger.logging.info("Death Count: " + str(death_count))
 
-                    # print(colored(pudgi.name + " died in childbirth", "red"))
+                    # logger.logging.info(colored(pudgi.name + " died in childbirth", "red"))
                 if int(time_clock.get_minutes()) % 15 == 0:
                     pudgi.make_decision()
 
