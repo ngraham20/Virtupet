@@ -365,11 +365,12 @@ class Pudgi(pygame.sprite.Sprite):
             if len(high_happiness) >= 2:
                 parent01 = high_happiness.pop()
                 parent02 = high_happiness.pop()
-                parents.append((parent01.uid, parent02.uid))
-                parent01.happiness = 2.0
-                parent01.vitality -= 4
-                parent02.happiness = 2.0
-                parent02.vitality -= 4
+                if random.random() <= 0.6:
+                    parents.append((parent01.uid, parent02.uid))
+                    parent01.happiness = 2.0
+                    parent01.vitality -= 4
+                    parent02.happiness = 2.0
+                    parent02.vitality -= 4
 
         return parents
 
@@ -396,8 +397,8 @@ class Pudgi(pygame.sprite.Sprite):
         chance_waking = -1
         chance_sleeping = -1
         # check vitality for sleepiness (using fuzzy logic)
-        low = 2.5
-        high = 9
+        low = 1
+        high = 10
         if vitality <= low:
             chance_waking = 0
             chance_sleeping = 1
