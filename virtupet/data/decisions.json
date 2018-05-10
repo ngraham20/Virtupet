@@ -75,12 +75,11 @@
       "entertainment": 0.2,
       "vitality": 0.1,
       "mental_energy": 0.6,
-      "physical_energy": 0.3}
+      "physical_energy": 0.3
+      }
     },
-  {
-    "name": "nothing",
-    "values": {
-      "attachment": 0.1,
+    {"name": "nothing", "values":
+      {"attachment": 0.1,
       "humor": 0.1,
       "enjoyment": 0.1,
       "excitement": 0.1,
@@ -89,7 +88,66 @@
       "entertainment": 0.5,
       "vitality": 0.1,
       "mental_energy": 0.1,
-      "physical_energy": 0.1
+      "physical_energy": 0.1}
+    },
+    {"name": "Run in place", "values":
+      {"attachment": 0.1,
+      "humor": 0.1,
+      "enjoyment": 0.5,
+      "excitement": 0.4,
+      "confidence": 0.6,
+      "contentment": 0.9,
+      "entertainment": 0.2,
+      "vitality": 0.8,
+      "mental_energy": 0.3,
+      "physical_energy": 0.7}
+    },
+    {"name": "Watch in TV", "values":
+      {"attachment": 0.3,
+      "humor": 0.8,
+      "enjoyment": 0.8,
+      "excitement": 0.4,
+      "confidence": 0.5,
+      "contentment": 0.7,
+      "entertainment": 0.7,
+      "vitality": 0.1,
+      "mental_energy": 0.3,
+      "physical_energy": 0.3}
+    },
+    {"name": "Code", "values":
+      {"attachment": 0.4,
+      "humor": 0.3,
+      "enjoyment": 0.7,
+      "excitement": 0.6,
+      "confidence": 0.7,
+      "contentment": 0.9,
+      "entertainment": 0.8,
+      "vitality": 0.2,
+      "mental_energy": 0.7,
+      "physical_energy": 0.1}
+    },
+    {"name": "Talk", "values":
+       {"attachment": 0.7,
+      "humor": 0.6,
+      "enjoyment": 0.7,
+      "excitement": 0.5,
+      "confidence": 0.4,
+      "contentment": 0.6,
+      "entertainment": 0.7,
+      "vitality": 0.2,
+      "mental_energy": 0.4,
+      "physical_energy": 0.1}
+    },
+    {"name": "Reflect on One's Life", "values":
+      {"attachment": 0.7,
+      "humor": 0.4,
+      "enjoyment": 0.6,
+      "excitement": 0.3,
+      "confidence": 0.6,
+      "contentment": 0.6,
+      "entertainment": 0.5,
+      "vitality": 0.2,
+      "mental_energy": 0.7,
+      "physical_energy": 0.2}
     }
-  }
 ]
