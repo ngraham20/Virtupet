@@ -119,6 +119,9 @@ def main():
                 logger.logging.info("<<<---" + pudgi.name + " died of old age--->>>")
                 logger.logging.info("Death Count: " + str(death_count))
 
+            else:
+                pudgi.age += 1
+
                 # logger.logging.info(colored(pudgi.name + " died of old age", "red"))
             if pudgi.sleeping:
                 movement[pudgi.name]["direction"] = "S"

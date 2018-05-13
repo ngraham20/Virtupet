@@ -69,7 +69,9 @@ class Pudgi(pygame.sprite.Sprite):
         # ------- general data -------
         self.known_decisions = self.json_object["known_decisions"]
         self.age = self.json_object["age"]
-        self.lifespan = random.randint(540, 660)  # approximately 10 minute irl lifespan
+
+        minute = 30*60
+        self.lifespan = random.randint(14*minute, 16*minute)  # 10 +-1 minute irl lifespan
 
         # TODO move this so it only happens upon creation of new Pudgi. Load pudgi should grab json attributes
         self.splice_dna()
@@ -146,7 +148,7 @@ class Pudgi(pygame.sprite.Sprite):
             else:
                 number = beta[1:]
 
-            bin_num = int(''.join(map(str, number)), base=2) #bin_num is the actual number out of 63
+            bin_num = int(''.join(map(str, number)), base=2)  # bin_num is the actual number out of 63
             self.weights[key] = 1 / (bin_num + 1)
 
     def decode_color(self, chromosomes):
@@ -365,12 +367,17 @@ class Pudgi(pygame.sprite.Sprite):
             if len(high_happiness) >= 2:
                 parent01 = high_happiness.pop()
                 parent02 = high_happiness.pop()
-                if random.random() <= 0.6:
+                logger.logging.info(parent01.name + " and " + parent02.name + " are attempting to have a child.")
+                if random.random() <= 0.5:
                     parents.append((parent01.uid, parent02.uid))
                     parent01.happiness = 2.0
-                    parent01.vitality -= 4
+                    parent01.vitality -= 3
                     parent02.happiness = 2.0
-                    parent02.vitality -= 4
+                    parent02.vitality -= 3
+                else:
+                    logger.logging.info("They will have to try again.")
+                    parent01.happiness = 5.0
+                    parent02.happiness = 5.0
 
         return parents
 
@@ -397,8 +404,8 @@ class Pudgi(pygame.sprite.Sprite):
         chance_waking = -1
         chance_sleeping = -1
         # check vitality for sleepiness (using fuzzy logic)
-        low = 1
-        high = 10
+        low = 2.5
+        high = 9
         if vitality <= low:
             chance_waking = 0
             chance_sleeping = 1
